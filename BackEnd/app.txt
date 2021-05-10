@@ -1,0 +1,12 @@
+Categories(id, name, summary, imagePath)
+Brands(id, name, summary, imagePath)
+Products(id, name, price, imagePath, categoryId, inStock, 
+summary, description)
+Specifications(id, name, summary)
+ProductSpecifications(id, productId, specificationId, description)
+Users(id, username, password, email, fullname, avatarPath, isAdmin)
+Orders( id, userId, address, total, isConfirmed, )
+OrderProducts(id, orderId, productId, quantity, price)
+
+Size(id, name) 
+ProductSizes(id, productId, sizeId, count)

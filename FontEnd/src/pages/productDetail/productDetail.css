@@ -1,0 +1,395 @@
+.backGroundLayoutProDetail{
+  background-color: #F6F6F6;
+  padding-bottom: 20px;
+}
+.backGroundContainerMain{
+  background-color: white;
+}
+.paddingTopAndBottomContainerMain{
+  padding-top: 5px;
+  padding-bottom: 10px;
+  margin-top: 30px;
+  border-radius: 10px;
+}
+.paddingLeftContainerRight{
+  margin-left: -12px;
+  padding-left: 25px;
+  position: inherit;
+  
+}
+.thumbnailImgProductDetail{
+    margin-bottom: 10px;
+    
+}
+.colmaginProDe{
+    padding-left: 15px;
+    padding-right: 1px;
+}
+.colmaginThumbail{
+  margin-right: -15px;
+}
+.containerRectangleVertical{
+    height: 330px;
+}
+.textCenter{
+    text-align: center;
+    color: black;
+    font-size: 14px;
+}
+.zoomDefine{
+    color: #999;
+    padding-right: 5px;
+}
+
+* {box-sizing: border-box;}
+
+.img-zoom-container {
+  position: relative;
+}
+
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  /*set the size of the lens:*/
+  width: 40px;
+  height: 40px;
+}
+
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 300px;
+  height: 300px;
+}
+vertical-line{
+  width: 1px; /* Line width */
+  background-color: black; /* Line color */
+  height: 100%; /* Override in-line if you want specific height. */
+  float: left; /* Causes the line to float to left of content.
+    You can instead use position:absolute or display:inline-block
+    if this fits better with your design */
+  border: 1px solid black;
+}
+.marginContainerLeft{
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+h3{
+  padding-top: 20px;
+  color: rgb(51, 51, 51);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: lighter;
+  font-style: unset;
+  padding-bottom: 5px;
+  position: inherit;
+}
+.yellowStar{
+  padding-right: 3px;
+  color: #FFC120;
+  font-size: 15px;
+}
+.yellowAward{
+  color: #FFC120;
+  font-size: 20px;
+  padding-right: 5px;
+}
+p{
+  font-size: 14px;
+  color: black;
+}
+.LinkHoverReview{
+  color: #379AF4;
+}
+.pColorMaSP{
+  color: #A7A7A7;
+}
+.paddingDivHR{
+  margin-left: -25px;
+  margin-right: -15px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.colorBackContainerShip{
+  background-color: #379AF4;
+  border-radius: 5px;
+  height: 50px;
+  margin-left: -5px;
+}
+.pColorShip{
+  color: white;
+  padding-top: 14px;
+  font-size: 16px;
+  text-align: center;
+}
+.iconShip{
+  font-size: 20px;
+  padding-right: 10px;
+  color: white;
+}
+.pPriceProduct{
+  color: red;
+  font-size: 30px;
+  padding-top: 8px;
+  font-weight: 550;
+}
+.pSave{
+  margin-bottom: 5px;
+  color: #A7A7A7;
+  margin-top: 5px;
+}
+.containerColor{
+  width: 120px ;
+  height: 35px ;
+  border-color: black;
+  border: 0.1px solid;
+  
+}
+.containerChildColor{
+  width: auto;
+  height: 30px;
+  margin-left: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: rgb(78, 78, 78);
+  text-align: center;
+  border-color: #bbbbbb !important;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+.pTextCenter{
+  text-align: center;
+  
+}
+.pInline{
+  display: inline-block;
+}
+.sizeShoe{
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border-color: #c5c5c5 !important;
+  border: 0.5px solid;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+.sizeShoe:hover{
+  background-color: #379AF4;
+  cursor: pointer;
+  color: white;
+  border-color: #379AF4 !important;
+}
+.sizeShoeSelect{
+  background-color: #379AF4;
+  color: white;
+  border-color: #379AF4 !important;
+}
+.spanQuantity{
+  color: red;
+  font-size: 20px;
+  font-weight: 600;
+
+}
+.plusButton{
+  width: 38px;
+  height: 35px;
+  border-color: #379AF4 !important;
+  border: 0.5px solid;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.plusButton:hover{
+  background-color: #379AF4;
+  cursor: pointer;
+  color: white;
+}
+.minusButton{
+  width: 35px;
+  height: 35px;
+  border-color: #379AF4 !important;
+  border: 0.5px solid;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.minusButton:hover{
+  background-color: #379AF4;
+  cursor: pointer;
+  color: white;
+}
+.inlineChangeQuantity{
+  display: flex;
+}
+
+.plusText{
+  font-size: 20px;
+  text-align: center;
+  color: #686868;
+}
+.minusText{
+  font-size: 20px;
+  text-align: center;
+  color: #686868;
+}
+.minusText:hover{
+  color: white;
+}
+.plusText:hover{
+  color: white;
+}
+
+.textBoxSize{
+  width: 70px;
+  border-color: #379AF4 !important;
+  border: 0.5px solid;
+  height: 35px;
+  margin-left: -0.5px;
+  margin-right: -1px;
+  border-radius: 0%;
+  text-align: center;
+}
+.buyButton{
+  font-size: 20px;
+  margin-top: -4px;
+  width: 250px;
+  margin-bottom: 20px;
+}
+.textQuantity{
+  color: #A7A7A7;
+  margin-bottom: 8px;
+}
+.paddingRightCart{
+  padding-right: 10px;
+  color: white;
+}
+.containerBuyWish{
+  padding-left: 50px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+.vertical-lineHR{
+  width: 0px;
+  height: 670px;
+  border-color: #E5E5E5 !important;
+  border: 0.1px solid;
+  margin-left: -1px;
+  /* display: inline-block; */
+}
+.pDicription{
+  margin-top: 20px;
+  font-size: 20px;
+  color: #379AF4;
+  font-weight: 600;
+}
+
+
+* {box-sizing: border-box;}
+
+.img-zoom-container {
+  position: relative;
+}
+
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  /*set the size of the lens:*/
+  width: 40px;
+  height: 40px;
+}
+
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 300px;
+  height: 300px;
+}
+.backGroundZoomImg{
+  position: initial !important;
+}
+.positionR{
+  position: inherit;
+}
+.cursorThumbnailImage{
+  cursor: pointer;
+}
+.cursorThumbnailImage:hover{
+  opacity: 80%;
+}
+.cursorThumbnailImageMore{
+  background-color: #7a7a7a;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 100%;
+  height: 65px;
+  padding-top: 10px;
+}
+.modalSize{
+  width: 1000px;
+}
+.prev-color{
+  background-color: black;
+  width: 30px;
+  height: 80px;
+}
+.linePacing{
+  margin-bottom: 15px;
+}
+.nameProductPacing{
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: 300;
+  margin-top: 0px;
+}
+.ratingProductPacing{
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+.carousel-control-prev:hover{
+  background-color: rgb(209, 209, 209);
+  opacity: 0.3;
+}
+.carousel-control-next:hover{
+  background-color: rgb(209, 209, 209);
+  opacity: 0.3;
+}
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+ }
+ .carousel-control-next-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+ }
+ .modalImageMaxWidth {
+  max-width: 700px !important;
+}
+
+.containerPrice{
+  background-color: #F6F6F6;
+  width: auto;
+  height: 60px;
+  margin-top: 15px;
+}
+.infoBeforePromotion{
+  font-weight: 350;
+  font-size: 18px;
+  text-decoration-line:line-through;
+  padding-top: 22px;
+  margin-left: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.inlinePromotion{
+  display: inline-flex;
+}
+.percentPromotion{
+  font-weight: 350;
+  font-size: 18px;
+  padding-top: 22px;
+}
+.descriptionProductDetail{
+  font-size: 18px;
+  height: auto !important;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}

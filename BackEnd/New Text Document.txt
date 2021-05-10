@@ -1,0 +1,6 @@
+5432
+
+Để chạy liên tục dùng node monitor (nodemon)
+
+
+Note ErrorCode:

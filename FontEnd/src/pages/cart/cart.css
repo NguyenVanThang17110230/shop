@@ -1,0 +1,150 @@
+.fixedResult {
+    position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+.backgrColor{
+    background-color: #F4F4F4;
+}
+.paddingLeftTitleCart{
+    padding-left: 385px;
+    padding-bottom: 10px;
+    /* font-family: "Montserrat", sans-serif; */
+    font-family: "Montserrat", sans-serif;
+}
+.colorSpan{
+    color: #979797;
+}
+.colorTagCoupon{
+    color: #979797;
+    padding-left: 5px;
+}
+.btn_3-submit-coupon{
+    width: 150px !important;
+    height: 20px !important;
+    padding-top: 5px;
+    padding-bottom: 25px;
+    margin-left: 45%;
+    margin-top: 15px;
+}
+.textBoxCoupon{
+    width: 280px;
+    height: 40px;
+    line-height: 10px;
+    border: none;
+    border-bottom: 1px solid #979797 !important;
+}
+.fontTitleCardCoupon{
+    font-family: "Montserrat", sans-serif !important;
+}
+.cardMagin{
+    margin-bottom: 20px;
+    
+}
+.textMaginRigth{
+    text-align: right !important;
+}
+.alignmentLeftPrice{
+    padding-left: 20px;
+}
+.alignmentRightPrice{
+    text-align: right;
+}
+.borderCardPriceChild{
+    border: none;
+    border-bottom: #979797 !important;
+}
+.borderCardPriceParent{
+    border: none;
+}
+.vatTextFontSize{
+    font-size: 13px;
+    color: #979797;
+    
+}
+.colorTextTotal{
+    color: red;
+    font-weight:bold !important;
+}
+.marginBottonCard{
+    padding-bottom: 15px !important;
+}
+.defaultLink{
+    color: #00b1ff;
+    padding-left: 10px;
+    padding-top: 1% !important;
+}
+.defaultLink:hover{
+    text-decoration: underline !important;
+}
+.Delete{
+    color: #00b1ff;
+
+}
+.Delete:hover{
+    text-decoration-style: solid;
+}
+.resizeImage{
+    width: 100% !important;
+    height: auto !important;
+}
+.pCart{
+    line-height: 13px !important;
+}
+.pPaddingTop{
+    padding-top: 18px;
+}
+.fontFamilyPriveCardProduct{
+    font-family: Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: bolder !important;
+    color: black !important;
+}
+.boderQuantitiyProduct{
+    border-radius: 50px !important;
+
+}
+.fontSize_a{
+    font-size: 14px !important;
+
+}
+.fontSize_a:hover{
+    color: #00b1ff !important;
+}
+.fontSize_p_span{
+    font-size: 12px !important;
+}
+.defaultDelete{
+    color: #00b1ff;
+    padding-top: 1% !important;
+}
+.defaultDelete:hover{
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+.boderCard{
+    border: none !important;
+}
+.rightButton{
+    padding-right: 0px;
+}
+.nameTagFailDiscount{
+    color: rgb(255, 50, 50);
+}
+.nameTagSuccessDiscount{
+    color: #00b1ff;
+}
+.sticky-bar {
+    left: 0;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    -webkit-box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
+    box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
+    z-index: 9999;
+    -webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+    animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+    -webkit-box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
+    background: #fff;
+}
