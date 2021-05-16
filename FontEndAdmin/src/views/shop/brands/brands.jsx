@@ -32,10 +32,11 @@ const getBadge = status => {
 }
 const fields = ['id', 'name', 'summary', 'imagePath']
 class Brand extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.onChangeValue = this.onChangeValue.bind(this);
         this.onChangeValueImage = this.onChangeValueImage.bind(this);
+        this.imageAvatarProductHandler = this.imageAvatarProductHandler.bind(this);
         this.state = {
             showModal: false,
             showModalEdit: false,
@@ -46,17 +47,18 @@ class Brand extends Component {
             avatarProductSaveAPI: '',
             updateDaily: '',
             stateBrand: [],
-            imagePath:'',
-            name:'',
-            description:'',
+            imagePath: '',
+            name: '',
+            description: '',
+            imagePathEdit: '',
         };
     }
-    
+
     componentDidMount() {
         this.loadData();
         console.log(this.props.urlBackend)
         console.log(this.props.user)
-        
+
     }
     loadData = async () => {
         await BrandService.listBrand().then((res) => {
@@ -66,15 +68,11 @@ class Brand extends Component {
     }
     InputOnChange = (event) => {
         const { name, value } = event.target; // đặt biến để phân rã các thuộc tính trong iout ra
-
         const newBrand = { ...this.state.brand, [name]: value } // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
         this.setState({ brand: newBrand });
-        console.log("addd",this.state.brand)
-        console.log("DDDD",this.state.brand.name);
     }
     InputOnChangeEdit = (event) => {
         const { name, value } = event.target; // đặt biến để phân rã các thuộc tính trong iout ra
-
         const newBrand = { ...this.state.stateBrand, [name]: value } // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
         this.setState({ stateBrand: newBrand });
         console.log(this.state.stateBrand)
@@ -83,28 +81,28 @@ class Brand extends Component {
         var name = event.target.name;
         var value = event.target.value;
         this.setState({
-          [name]: value,
+            [name]: value,
         });
     }
     onChangeValueImage(event) {
         if (event.target.files && event.target.files[0]) {
-          var reader = new FileReader();
-          var a = document.querySelector(".borderImgSizeBrand");
-    
-          reader.onload = function (e) {
-            this.setState({
-                imagePath: e.target.result,
-            });
-            a.src = e.target.result;
-          }.bind(this);
-          reader.readAsDataURL(event.target.files[0]);
+            var reader = new FileReader();
+            var a = document.querySelector(".borderImgSizeBrand");
+
+            reader.onload = function (e) {
+                this.setState({
+                    imagePath: e.target.result,
+                });
+                a.src = e.target.result;
+            }.bind(this);
+            reader.readAsDataURL(event.target.files[0]);
         }
-      }
+    }
     save = async () => {
         await BrandService.createBrand({
-            name:this.state.name,
-            summary:this.state.description,
-            image:this.state.imagePath
+            name: this.state.name,
+            summary: this.state.description,
+            image: this.state.imagePath
         }).then(res => {
             alert("Cập nhật thông tin thành công")
             this.loadData();
@@ -112,15 +110,26 @@ class Brand extends Component {
         });
     }
     saveEdit = async () => {
-        var data = new FormData();
-        console.log(this.state.avatarProductSaveAPI)
-        if (this.state.avatarProductSaveAPI !== '') {
-            data.append("imagePath", this.state.avatarProductSaveAPI);
+        const data = {
+            name:'', 
+            summary:'', 
+            image:''
         }
+     
 
-        data.append("name", this.state.stateBrand.name);
-        data.append("summary", this.state.stateBrand.summary);
-        await BrandService.updateBrandById(this.state.stateBrand.code, data).then(res => {
+        if (this.state.imagePathEdit === '') {
+            data.image = this.state.stateBrand.image
+        }
+        else{
+            data.image = this.state.imagePathEdit
+        }
+        data.name = this.state.stateBrand.name
+        data.summary = this.state.stateBrand.summary
+        await BrandService.updateBrandById(this.state.stateBrand.code, {
+            name: data.name,
+            summary: data.summary,
+            image:data.image,
+        }).then(res => {
             if (res.status === 200) {
                 alert('Update Brand thành công!')
             }
@@ -148,6 +157,28 @@ class Brand extends Component {
         this.setState({ showModalEdit: false });
         this.setState({ avatarProduct: '' });
     }
+    delete = (type) => {
+        var result = window.confirm("Bạn chắc chắn muốn xóa loại thương hiệu này không?")
+        if(result){
+          BrandService.deleteBrand(type)
+          .then((res)=>{
+            console.log(res);
+            if(res.status === 200){
+            //   toast.success(res.data);
+            //   this._getData();
+                console.log('ok ròi ne');
+            }
+            else
+            {
+            //   toast.error(res.data);
+            }
+          })
+        //   .catch((err) => toast.error(err.response.data));
+        }
+        else{
+            console.log('jjj');
+        }
+    }
     render() {
         const { loading, imageUrl } = this.state;
         const uploadButton = (
@@ -156,7 +187,7 @@ class Brand extends Component {
                 <div style={{ marginTop: 8 }}>Upload</div>
             </div>
         );
-        console.log("@@@@",this.state);
+        console.log("@@@@", this.state);
         return (
             <div onLoad={this.loadData}>
                 {/* <div className="row">
@@ -203,9 +234,8 @@ class Brand extends Component {
                                             oninput="pic.src=window.URL.createObjectURL(this.files[0])"
                                         />
                                     </div>
-                                    
                                     <img className="borderImgSizeBrand" src="#" />
-                                    
+
                                 </Form>
                                 <Button variant="primary" onClick={this.save}>
                                     Thêm
@@ -224,7 +254,7 @@ class Brand extends Component {
                     >
                         <Modal.Header closeButton>
                             <Modal.Title id="example-custom-modal-styling-title " dialogClassName="textCenterModalTitle">
-                                Thêm thông tin thương hiệu
+                                Sửa thông tin thương hiệu
                         </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -250,17 +280,18 @@ class Brand extends Component {
                                             oninput="pic.src=window.URL.createObjectURL(this.files[0])"
                                         />
                                     </div>
-                                    {this.state.stateBrand.imagePath ?
+                                    {this.state.stateBrand.image ?
                                         <div>
-                                            {this.state.avatarProduct === '' ? 
-                                                <img className="borderImgSizeBrand" src={`${this.props.urlBackend.urlBackend}${this.state.stateBrand.imagePath}`} />:<img className="borderImgSizeBrand" src={this.state.avatarProduct} />
+                                            {this.state.imagePathEdit === '' ?
+                                                <img className="borderImgSizeBrand" src={this.state.stateBrand.image} /> : <img className="borderImgSizeBrand" src={this.state.imagePathEdit} />
                                             }
                                         </div> :
                                         <div>
-                                            {this.state.avatarProduct === '' ? null :
-                                                <img className="borderImgSizeBrand" src={this.state.avatarProduct} />
+                                            {this.state.imagePathEdit === '' ? null :
+                                                <img className="borderImgSizeBrand" src={this.state.imagePathEdit} />
                                             }
-                                        </div>}
+                                        </div>
+                                    }
                                 </Form>
                                 <Button variant="primary" onClick={this.saveEdit}>
                                     Cập nhật
@@ -298,7 +329,7 @@ class Brand extends Component {
                                                                 {this.state.listShowBrands.map((brand, i) => {
                                                                     return (
                                                                         <tr key={i}>
-                                                                            <td>{i+1}</td>
+                                                                            <td>{i + 1}</td>
                                                                             <td>{brand.name}</td>
                                                                             <td>{brand.summary}</td>
                                                                             {brand.image !== null ?
@@ -313,7 +344,52 @@ class Brand extends Component {
                                                                                     Null
                                                                                 </td>
                                                                             }
-                                                                            <td className="infoIconOnBrand" onClick={() => this.setShowModalEditBrand(brand.code)}><i class="fas fa-info-circle"></i></td>
+                                                                            <td>
+                                                                                <Button
+                                                                                    size="sm"
+                                                                                    onClick={() => this.setShowModalEditBrand(brand.code)}
+                                                                                    color="success"
+                                                                                >
+                                                                                    <svg
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                        className="h-6 w-6"
+                                                                                        fill="none"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        stroke="currentColor"
+                                                                                        style={{ width: "20px", height: "20px", color: "#fff" }}
+                                                                                    >
+                                                                                        <path
+                                                                                            strokeLinecap="round"
+                                                                                            strokeLinejoin="round"
+                                                                                            strokeWidth={2}
+                                                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                                                        />
+                                                                                    </svg>
+                                                                                </Button>
+
+                                                                                <Button 
+                                                                                    size="sm"
+                                                                                    className="bv"
+                                                                                    onClick={()=>this.delete(brand.code)}
+                                                                                    color="danger"
+                                                                                >
+                                                                                    <svg
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                        className="h-6 w-6"
+                                                                                        fill="none"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        stroke="currentColor"
+                                                                                        style={{ width: "20px", height: "20px", color: "#fff" }}
+                                                                                    >
+                                                                                        <path
+                                                                                            strokeLinecap="round"
+                                                                                            strokeLinejoin="round"
+                                                                                            strokeWidth={2}
+                                                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                                                        ></path>
+                                                                                    </svg>
+                                                                                </Button>
+                                                                            </td>
                                                                         </tr>
                                                                     )
                                                                 })}
@@ -324,26 +400,6 @@ class Brand extends Component {
                                             </CCol>
                                         </CRow>
                                     </>
-                                    {/* <CDataTable
-                                        items={this.state.listShowBrands}
-                                        fields={fields}
-                                        hover
-                                        striped
-                                        bordered
-                                        size="lg"
-                                        itemsPerPage={10}
-                                        pagination
-                                        scopedSlots={{
-                                            'status':
-                                                (item) => (
-                                                    <td>
-                                                        <CBadge color={getBadge(item.status)}>
-                                                            {item.status}
-                                                        </CBadge>
-                                                    </td>
-                                                )
-                                        }}
-                                    /> */}
                                 </CCardBody>
                             </CCard>
                         </CCol>
@@ -354,19 +410,16 @@ class Brand extends Component {
         );
     }
     imageAvatarProductHandler = (event) => {
-        const reader1 = new FileReader()
-        reader1.onload = () => {
-            if (reader1.readyState === 2) {
-                this.setState({ avatarProduct: reader1.result })
-                this.realTime();    //Cập nhật state ngay lập tức
-            }
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            const a = document.querySelector(".borderImgSizeBrand6");
+            reader.onload = function (e) {
+                this.setState({
+                    imagePathEdit: e.target.result,
+                });
+            }.bind(this);
+            reader.readAsDataURL(event.target.files[0]);
         }
-        this.setState({ avatarProductSaveAPI: event.target.files[0] })
-        //this.state.avatarProductSaveAPI.push(event.target.files[0])
-        this.realTime();
-        this.setState({ imagePath:this.state.avatarProductSaveAPI})    //Cập nhật state ngay lập tức
-        console.log(this.state.avatarProductSaveAPI)
-        reader1.readAsDataURL(event.target.files[0])
     }
     realTime = () => {
         this.setState({ updateDaily: '1' });
@@ -378,4 +431,4 @@ const mapStateToProps = state => {
         user: state.user
     }
 }
-export default connect(mapStateToProps,null)(Brand);
+export default connect(mapStateToProps, null)(Brand);

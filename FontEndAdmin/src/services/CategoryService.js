@@ -6,11 +6,14 @@ import Api from "./Api";
 // }
 // const register = data => Api.post(Api.url.register, data);
 // const getUser = () => Api.get(`${Api.url.userInfo}`);
-// const get = (id) => Api.get(`${Api.url.majors}/${id}`);
+const get = (id) => Api.get(`${Api.url.category}/${id}`);
 const createCategory = data => Api.post(Api.url.category, data)
 const listCategory = () => Api.get(Api.url.category);
+const deleteService = code => Api.delete(`${Api.url.category}/${code}`)
 // const getProduct = () => Api.get(`${Api.url.product}/${id}`)
 export default{
     createCategory : createCategory,
     listCategory : listCategory,
+    get: get,
+    deleteService:deleteService,
 };

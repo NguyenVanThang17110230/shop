@@ -10,7 +10,10 @@
   width: 128px;
   height: 128px;
 }
-
+.bv{
+  background-color:red!important;
+  border-color:red!important;
+}
 .borderImgSizeAvatar {
   height: 100px;
   width: auto;

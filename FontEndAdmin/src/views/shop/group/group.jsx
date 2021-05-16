@@ -5,6 +5,7 @@ import {
     Button,
     Modal,
     Form,
+    Table,
 } from "react-bootstrap";
 import {
     CBadge,
@@ -31,13 +32,15 @@ const fields = ['name', 'summary']
 class Products extends Component {
     state = {
         showModal: false,
-        categories:{},
+        categories: {},
         group: [],
-        listShowGroup:[],
+        listShowGroup: [],
+        showModalEdit:false,
+        stateGroup:[],
     };
     componentDidMount() {
         this.loadData();
-        
+
     }
     loadData = () => {
         GroupService.listGroup().then((res) => {
@@ -47,6 +50,16 @@ class Products extends Component {
 
         });
     }
+    async setShowModalEditBrand(id) {
+        await GroupService.get(id).then(res => {
+            this.setState({ stateGroup: res.data.Groups })
+        })
+        this.setState({ showModalEdit: true });
+
+    }
+    setCloseModalEditBrand = () => {
+        this.setState({ showModalEdit: false });
+    }
     InputOnChange = (event) => {
         const { name, value } = event.target; // đặt biến để phân rã các thuộc tính trong iout ra
 
@@ -54,7 +67,7 @@ class Products extends Component {
         this.setState({ group: newGroup });
         console.log(this.state.group);
     }
-    save=()=>{
+    save = () => {
         GroupService.createGroup(this.state.group).then(res => {
             alert("Cập nhật thông tin thành công")
             this.loadData();
@@ -68,6 +81,54 @@ class Products extends Component {
     }
     setCloseModal = () => {
         this.setState({ showModal: false });
+    }
+    InputOnChangeEdit = (event) => {
+        const { name, value } = event.target; // đặt biến để 
+        const newGroup = { ...this.state.stateGroup, [name]: value } // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
+        this.setState({ stateGroup: newGroup });
+        console.log(this.state.stateGroup)
+    }
+    saveEdit = async () => {
+        const data = {
+            name:'', 
+            summary:'', 
+        }
+        data.name = this.state.stateGroup.name
+        data.summary = this.state.stateGroup.summary
+        await GroupService.updateGroupById(this.state.stateGroup.code, {
+            name: data.name,
+            summary: data.summary,
+        }).then(res => {
+            if (res.status === 200) {
+                alert('Update Brand thành công!')
+            }
+            this.loadData()
+        }, function (error) {
+            alert("Lỗi không lưu được!")
+        })
+        this.setCloseModalEditBrand()
+    }
+    delete = (type) => {
+        var result = window.confirm("Bạn chắc chắn muốn xóa loại nhóm này không?")
+        if(result){
+          GroupService.deleteService(type)
+          .then((res)=>{
+            console.log(res);
+            if(res.status === 200){
+            //   toast.success(res.data);
+                this.loadData();
+                console.log('ok ròi ne');
+            }
+            else
+            {
+            //   toast.error(res.data);
+            }
+          })
+        //   .catch((err) => toast.error(err.response.data));
+        }
+        else{
+            console.log('jjj');
+        }
     }
 
     render() {
@@ -106,11 +167,11 @@ class Products extends Component {
                             <Form>
                                 <Form.Group controlId="formBasicName">
                                     <Form.Label>Tên Group</Form.Label>
-                                    <Form.Control type="text" name="nameProduct" placeholder="Tên danh mục" name="name" onChange={this.InputOnChange}/>
+                                    <Form.Control type="text" name="nameProduct" placeholder="Tên danh mục" name="name" onChange={this.InputOnChange} />
                                 </Form.Group>
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                     <Form.Label>Mô tả</Form.Label>
-                                    <Form.Control as="textarea" type="text" name="summary" rows={2} onChange={this.InputOnChange}/>
+                                    <Form.Control as="textarea" type="text" name="summary" rows={2} onChange={this.InputOnChange} />
                                 </Form.Group>
                                 <Button variant="primary" type="submit" onClick={this.save}>
                                     Thêm
@@ -118,6 +179,51 @@ class Products extends Component {
                             </Form>
                         </Modal.Body>
                     </Modal>
+
+                    <Modal
+                        show={this.state.showModalEdit}
+                        onHide={this.setCloseModalEditBrand}
+                        keyboard={false}
+                        backdrop="static"
+                        dialogClassName="modalMaxWidth"
+                        aria-labelledby="example-custom-modal-styling-title"
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="example-custom-modal-styling-title " dialogClassName="textCenterModalTitle">
+                                Sửa thông tin nhóm
+                        </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+                                <Form.Group controlId="formBasicName">
+                                    <Form.Label>Tên</Form.Label>
+                                    <Form.Control 
+                                        type="text" 
+                                        placeholder="Tên sản phẩm" 
+                                        name="name" 
+                                        onChange={this.InputOnChangeEdit} 
+                                        value={this.state.stateGroup.name} 
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label>Mô tả</Form.Label>
+                                    <Form.Control 
+                                        as="textarea" 
+                                        type="text" 
+                                        name="summary" 
+                                        rows={2} 
+                                        onChange={this.InputOnChangeEdit} 
+                                        value={this.state.stateGroup.summary ?
+                                        this.state.stateGroup.summary : null} 
+                                     />
+                                </Form.Group>
+                                <Button variant="primary" onClick={this.saveEdit}>
+                                    Cập nhật
+                                </Button>
+                            </Form>
+                        </Modal.Body>
+                    </Modal>
+                
                 </>
                 <>
                     <CRow>
@@ -127,26 +233,76 @@ class Products extends Component {
                                     <p className="fontSizeNameTable">Danh sách Group</p>
                                 </CCardHeader>
                                 <CCardBody>
-                                    <CDataTable
-                                        items={this.state.listShowGroup}
-                                        fields={fields}
-                                        hover
-                                        striped
-                                        bordered
-                                        size="lg"
-                                        itemsPerPage={15}
-                                        pagination
-                                        scopedSlots={{
-                                            'status':
-                                                (item,i) => (
-                                                    <td key={i}>
-                                                        <CBadge color={getBadge(item.status)}>
-                                                            {item.status}
-                                                        </CBadge>
-                                                    </td>
+                                    <Table striped hover>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Summary</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        {/* Show danh sách các sản phẩm */}
+                                        <tbody>
+                                            {this.state.listShowGroup.map((group, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td>{i + 1}</td>
+                                                        <td>{group.name}</td>
+                                                        <td>{group.summary}</td>
+                                                        <td>
+                                                            <Button
+                                                                size="sm"
+                                                                onClick={() => this.setShowModalEditBrand(group.code)}
+                                                                color="success"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    className="h-6 w-6"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke="currentColor"
+                                                                    style={{ width: "20px", height: "20px", color: "#fff" }}
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={2}
+                                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                                    />
+                                                                </svg>
+                                                            </Button>
+
+                                                            <Button
+                                                                size="sm"
+                                                                className="bv"
+                                                                onClick={() => this.delete(group.code)}
+                                                                color="danger"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    className="h-6 w-6"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke="currentColor"
+                                                                    style={{ width: "20px", height: "20px", color: "#fff" }}
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={2}
+                                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                                    ></path>
+                                                                </svg>
+                                                            </Button>
+                                                        </td>
+                                                    </tr>
                                                 )
-                                        }}
-                                    />
+                                            })}
+                                        </tbody>
+                                    </Table>
+
                                 </CCardBody>
                             </CCard>
                         </CCol>
