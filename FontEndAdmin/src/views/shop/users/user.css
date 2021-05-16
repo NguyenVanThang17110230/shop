@@ -1,0 +1,119 @@
+.info{
+    color: #379AF4;
+    padding-left: 25px;
+    font-size: 22px;
+    margin-top: -5px;
+}
+.info:hover{
+    cursor: pointer;
+}
+.delete{
+    color: red;
+    padding-left: 25px;
+    font-size: 22px;
+    margin-top: -5px;
+}
+.delete:hover{
+    cursor: pointer;
+}
+.tableFieldName{
+    color: #2F8CFB;
+    font-weight: 600;
+}
+.female{
+    color: #D9480F;
+}
+.male{
+    color: #15AABF
+}
+.modalMaxWidth {
+    max-width: 1200px;
+}
+.modalMaxWidthDelete{
+    max-width: 500px;
+}
+.imgSizeUser{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-left: 25px;
+}
+.nameUserOnModal{
+    font-size: 25px;
+    font-weight: 600;
+    font-family: CircularStd;
+}
+.scoreUserAccumulation{
+    font-size: 18px;
+    font-weight: 600;
+    color: #99908E;
+    font-family: CircularStd;
+    margin-bottom: 5px;
+}
+.infoUserOnModal{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: #4F4F4F;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+.colorInfo{
+    color: #2F8CFB;
+}
+.hrS{
+    height: 180px;
+    width: 1px;
+    border: solid 1px;
+    border-style: dashed ;
+    border-color: #99908E;
+    margin-right: 10px;
+}
+.textCenterModalTitleUser{
+    text-align: center !important;
+}
+.noteIconModal{
+    margin-left: 190px;
+    color: white;
+}
+
+.backModalDele{
+    background-color: #E85E6C;
+}
+.textCaution{
+    font-size: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+.btnModalDelAccept{
+    width: 130px;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(238, 81, 81);
+    color: white;
+    font-size: 23px;
+}
+.btnModalDelAccept:hover{
+    cursor: pointer;
+    color: white;
+    opacity: 90%;
+}
+
+.btnModalDelCancel{
+    width: 130px;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    background-color:#379AF4;
+    color: white;
+    font-size: 23px;
+}
+.btnModalDelCancel:hover{
+    cursor: pointer;
+    color: white;
+    opacity: 90%;
+}
+.containerSubModalDel{
+    margin-left: 35px;
+    margin-top: 20px;
+}

@@ -1,0 +1,580 @@
+body {
+  padding: 0rem 0rem !important;
+}
+
+.like {
+  font-size: 1.5rem !important;
+}
+.ps-btn {
+  width: 100 !important;
+  height: 50 !important;
+}
+.nameProduct {
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
+  -webkit-line-clamp: ;
+  height: 50px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.descriptionProduct {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
+  -webkit-line-clamp: 4;
+  height: 100px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.card-img-top {
+  vertical-align: top;
+  vertical-align: bottom;
+  border: rgba(140, 136, 140, 1);
+  border-width: 0.25px;
+}
+.button {
+  background-color: #4caf50 !important; /* Green */
+  border: none !important;
+  color: white !important;
+  padding: 16px 32px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  font-size: 16px !important;
+  margin: 4px 2px !important;
+  transition-duration: 0.4s !important;
+  cursor: pointer !important;
+}
+
+.button1 {
+  background-color: white !important;
+  color: black !important;
+  border: 2px solid #4caf50 !important;
+}
+
+.button1:hover {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+.p {
+  font-size: 26px !important;
+  color: #ff0000;
+}
+.link:hover {
+  opacity: 0.8;
+  box-shadow: 0px 0px 5px 5px rgb(212, 212, 212);
+}
+.nav-link-card-product {
+  display: block;
+  padding: 0.25rem 0.25rem;
+}
+.boderimg_Pro {
+  border: 1px solid;
+  border-color: rgb(226, 226, 226);
+}
+.aHeart {
+  color: #4caf50 !important;
+  text-decoration: none;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.pcolor {
+  color: black !important;
+}
+
+.size-box .size_item {
+  width: 32px;
+  height: 25px;
+  display: inline-block;
+  border: 1px solid transparent;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.backgroundContainer {
+  background-color: #4caf50 !important;
+}
+.textCenter {
+  text-align: center !important;
+}
+.color-text {
+  color: white !important;
+}
+.p1 {
+  font-size: 16px !important;
+  color: #ff0000;
+  margin-top: 15px !important;
+}
+.data-background-productlist {
+  background-image: url("../../img/hero/category.jpg");
+}
+.backGroundProductList {
+  background-color: #f6f6f6;
+  padding-bottom: 20px !important;
+}
+.paddingLeftStrong {
+  padding-left: 20px;
+}
+.cardPaddingBottom {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.borderNoneCardProduct {
+  border: none;
+}
+.backgroundLeftCategory {
+  background-color: white;
+  padding-top: 20px;
+  padding-left: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.pFontSize {
+  font-size: 20px !important;
+}
+.backgroundRow {
+  background-color: white !important;
+}
+.margin_card_body {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.padding_card_body {
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+.cardMarginTop {
+  margin-top: 10px !important;
+}
+.containerMainMarginTop {
+  margin-top: 15px !important;
+}
+.rightList {
+  padding-right: 0px;
+}
+.radiusDelivery {
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.filterCategory {
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 0px;
+  border-radius: 10px;
+  margin-left: 0px;
+  text-align: center;
+}
+.filterCategoryEffect {
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 0px;
+  /* text-shadow: 2px 2px 5px cornflowerblue; */
+  background-color: #e2e2e2;
+  border-radius: 10px;
+  margin-left: 0px;
+  text-align: center;
+}
+.filterCategory:hover {
+  color: cornflowerblue;
+  text-shadow: 2px 2px 5px cornflowerblue;
+}
+a {
+  color: #626262;
+}
+/* i{
+  font-weight: 500;
+  color: #ff4e4e;
+} */
+.filterBrand {
+  margin-bottom: 15px;
+}
+.filterBrandEffect {
+  margin-bottom: 15px;
+  opacity: 0.9;
+  box-shadow: 0px 0px 5px 5px rgb(212, 212, 212);
+}
+.filterBrand:hover {
+  opacity: 0.9;
+  box-shadow: 0px 0px 5px 5px rgb(212, 212, 212);
+}
+.filterImgBrand {
+  max-width: 160px;
+}
+
+.truck_s {
+  color: white;
+}
+
+.pagingDisplay{
+  
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 4096px) {
+  .tagFilter {
+    font-family: Open Sans, sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: #626262;
+    margin-bottom: 10px;
+  }
+  .btnFilter {
+    width: auto;
+    height: 40px;
+    border: 1px solid;
+    border-color: #adadad;
+    font-size: 14px;
+    padding-top: 7px;
+    margin-left: -40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .btnFilter:hover {
+    background-color: dodgerblue;
+    color: white;
+    border-color: white;
+  }
+  .marginSelling {
+    margin-left: -30px;
+  }
+  .marginIncrease {
+    margin-left: -90px;
+  }
+  .marginDecrease {
+    margin-left: -125px;
+  }
+  .nameFilter {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  .marginInputLeft {
+    margin-top: 15px;
+    margin-bottom: 15;
+    margin-left: -155px;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputRight {
+    margin-top: 15px;
+    margin-bottom: 15;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputAAA {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 10px;
+  }
+  .displayInput {
+    margin-top: 1px;
+    display: inline-flex;
+  }
+  .boderRaFilter {
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  .btnSearchPrice {
+    width: auto;
+    height: 35px;
+    font-size: 16px;
+    background-color: dodgerblue;
+    margin-top: 16px;
+    margin-left: 10px;
+    padding-top: 5px;
+    color: white;
+    font-weight: 600;
+  }
+  .btnSearchPrice:hover {
+    background-color: rgb(6, 92, 179);
+  }
+  .selectFilter {
+    background-color: dodgerblue;
+    color: white;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  .tagFilter {
+    font-family: Open Sans, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #626262;
+    margin-bottom: 10px;
+  }
+  .btnFilter {
+    width: auto;
+    height: 40px;
+    border: 1px solid;
+    border-color: #adadad;
+    font-size: 14px;
+    padding-top: 7px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: -5px;
+  }
+  .btnFilter:hover {
+    background-color: dodgerblue;
+    color: white;
+    border-color: white;
+  }
+  .marginSelling {
+    margin-left: 45px;
+  }
+  .marginIncrease {
+    margin-left: 25px;
+  }
+  .marginDecrease {
+    margin-left: 30px;
+  }
+  .nameFilter {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  .displayInput {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    margin-left: -31.2rem;
+    display: inline-flex;
+  }
+  .marginInputLeft {
+    margin-top: 15px;
+    margin-bottom: 15;
+    margin-left: -155px;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputRight {
+    margin-top: 15px;
+    margin-bottom: 15;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputAAA {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 10px;
+  }
+
+  .boderRaFilter {
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  .btnSearchPrice {
+    width: auto;
+    height: 35px;
+    font-size: 16px;
+    background-color: dodgerblue;
+    margin-top: 16px;
+    margin-left: 10px;
+    padding-top: 5px;
+    color: white;
+    font-weight: 600;
+  }
+  .btnSearchPrice:hover {
+    background-color: rgb(6, 92, 179);
+  }
+}
+.hoverTitleProduct:hover {
+  color: #ff0000;
+}
+
+@media only screen and (min-width: 376px) and (max-width: 414px) {
+  .backgroundLeftCategory {
+    display: none;
+  }
+  .boderRaFilter {
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 375px;
+    margin-left: 5px;
+  }
+  .btnFilter {
+    width: auto;
+    height: 40px;
+    border: 1px solid;
+    border-color: #adadad;
+    font-size: 13px;
+    padding-top: 7px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 45px;
+  }
+  .btnFilter:hover {
+    background-color: dodgerblue;
+    color: white;
+    border-color: white;
+  }
+  .marginSelling {
+    margin-left: 150px;
+  }
+  .marginIncrease {
+    margin-left: -5.3rem;
+    margin-top: 70px;
+  }
+  .marginDecrease {
+    margin-top: 70px;
+    margin-left: -5px;
+  }
+  .nameFilter {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-right: -80px;
+  }
+  .displayInput {
+    margin-top: 110px;
+    margin-bottom: 10px;
+    margin-left: -6rem;
+    display: inline-flex;
+    font-size: 14px;
+  }
+  .marginInputLeft {
+    margin-top: 15px;
+    margin-bottom: 15;
+    margin-left: -155px;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputRight {
+    margin-top: 15px;
+    margin-bottom: 15;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputAAA {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 10px;
+  }
+  .btnSearchPrice {
+    width: auto;
+    height: 35px;
+    font-size: 16px;
+    background-color: dodgerblue;
+    margin-top: 16px;
+    margin-left: 10px;
+    padding-top: 5px;
+    color: white;
+    font-weight: 600;
+  }
+  .btnSearchPrice:hover {
+    background-color: rgb(6, 92, 179);
+  }
+  .sizeCard {
+    width: 375px !important;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .backgroundLeftCategory {
+    display: none;
+  }
+  .boderRaFilter {
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 340px;
+  }
+  .nameFilter {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-right: -100px;
+    margin-left: 0px;
+  }
+  .btnFilter {
+    width: auto;
+    height: 40px;
+    border: 1px solid;
+    border-color: #adadad;
+    font-size: 13px;
+    padding-top: 7px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 90px;
+  }
+  .btnFilter:hover {
+    background-color: dodgerblue;
+    color: white;
+    border-color: white;
+  }
+  .marginSelling {
+    margin-top: 70px;
+    margin-left: -115px;
+  }
+  .marginIncrease {
+    margin-left: -4.7rem;
+    margin-top: 70px;
+  }
+  .marginDecrease {
+    margin-top: 70px;
+    margin-left: -15px;
+  }
+
+  .displayInput {
+    margin-top: 110px;
+    margin-bottom: 10px;
+    margin-left: -8.2rem;
+    display: inline-flex;
+    font-size: 14px;
+  }
+  .marginInputLeft {
+    margin-top: 15px;
+    margin-bottom: 15;
+    margin-left: -155px;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputRight {
+    margin-top: 15px;
+    margin-bottom: 15;
+    font-size: 14px;
+    width: 100px;
+    padding: 0 8px !important;
+  }
+  .marginInputAAA {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 10px;
+  }
+  .btnSearchPrice {
+    width: auto;
+    height: 35px;
+    font-size: 16px;
+    background-color: dodgerblue;
+    margin-top: 16px;
+    margin-left: 10px;
+    padding-top: 5px;
+    color: white;
+    font-weight: 600;
+  }
+  .btnSearchPrice:hover {
+    background-color: rgb(6, 92, 179);
+  }
+  .sizeCard {
+    width: 340px !important;
+  }
+}

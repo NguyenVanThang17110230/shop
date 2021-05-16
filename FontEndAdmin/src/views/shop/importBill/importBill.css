@@ -1,0 +1,13 @@
+.iconInfo{
+    color: cornflowerblue;
+    font-size: 25px;
+}
+.iconInfo:hover{
+    cursor: pointer;
+}
+.modalSizeMaxWidth{
+    width: 1300px !important;
+}
+.trBackGround{
+    background-color: #379AF4 !important;
+  }

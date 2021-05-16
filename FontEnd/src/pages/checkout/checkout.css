@@ -1,0 +1,171 @@
+.backgroundCheckout{
+    background-color: #F4F4F4;
+}
+.backgroundContainerCheckout{
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.backgroundContainerCheckout1{
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.paddingLable{
+    padding-top: 8px;
+}
+.selectBoxAddress{
+    width: 100% !important;
+    display: inline !important;
+}
+.addressDetailHeight{
+    /* height: 100px !important; */
+    /* padding-top: -50px !important;
+    line-height: 100px !important; */
+    height: 50px;
+    line-height: 25px;
+
+}
+.form-control{
+    background-color: white !important;
+}
+.cardShadowTotal{
+    box-shadow: 0px 0px 5px 5px rgb(195, 195, 195);
+    background-color: #2BBD5A;
+}
+.textCenterTotal{
+    text-align: center;
+    font-size: 25px !important;
+    color: white;
+}
+.textPaddingTotal{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.paddingCardTotalBottom{
+    margin-top: 15px;
+}
+.redHightlightPriceCardTotal{
+    color: red;
+    font-weight:bold !important;
+}
+.cardUnderCardAddress{
+    margin-top: 20px;
+}
+.fixed {
+    position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+.h3Padding{
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+/* .imgBackgrouPaypal{
+    background-image: url("../img/checkoutIMG/paypallogo.png") !important;
+} */
+.imgSizePayment{
+    display: block;
+  max-width:230px;
+  max-height:95px;
+  width: auto;
+  height: auto;
+}
+.imgSizePayment:hover{
+    cursor: pointer;
+}
+.imgSizeMomo{
+    display: block;
+  max-width:230px;
+  max-height:95px;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #AE2070;
+}
+.imgSizePayment:hover{
+    box-shadow: 0px 0px 5px 5px rgb(195, 195, 195);
+}
+/* .imgSizeMomo:hover{
+    box-shadow: 0px 0px 5px 5px rgb(195, 195, 195);
+} */
+.containerMono{
+    width:150px;
+    height:96px;
+    background-color: #AE2070;
+    border: 0.1px solid #AE2070 !important;
+}
+.containerMono:hover{
+    box-shadow: 0px 0px 5px 5px rgb(195, 195, 195);
+}
+.paddingBottomRadio{
+    padding-bottom: 20px;
+}
+.paddingBottomRadioWalletCard{
+    margin-bottom: 20px;
+}
+.containerBoderVisaCard{
+    border: 0.1px solid rgb(195, 195, 195);
+    border-radius: 10px;
+    background-color: #016DB3;
+}
+.imgSizeVisaCard{
+    max-width:70px;
+    max-height:40px;
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+}
+.h2Visa{
+    color: white;
+    padding-top: 5px;
+
+}
+.imgChipSize{
+    max-width:40px;
+    max-height:40px;
+    width: auto;
+    height: auto;
+    margin-top: 0px;
+}
+.pIdCard{
+    font-size: 23px;
+    color: white;
+    font-family: 'Calibri';
+    padding-top: 3px;
+    margin-bottom: 5px;
+}
+.pNameUserCard{
+    font-size: 18px;
+    color: aliceblue;
+    font-family: 'Calibri';
+    margin-bottom: 0px;
+}
+.pNameValidDateCard{
+    font-size: 18px;
+    color: aliceblue;
+    font-family: 'Calibri';
+    margin-bottom: 0px;
+    text-align: right;
+}
+.boderVertical{
+    border: 1px solid rgb(148, 148, 148);
+    width: 1px;
+    height: 100px;
+}
+.finalTotal{
+    padding-bottom: 10px;
+
+}
+
+/* Ẩn thuốc tính không cần thiết */
+.nice-select{
+    display: none !important;
+}

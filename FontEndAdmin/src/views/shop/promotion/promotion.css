@@ -1,0 +1,8 @@
+.notice{
+    color: red;
+    display: inline;
+    font-weight: 600;
+}
+.modalMaxWidth {
+    max-width: 900px;
+}

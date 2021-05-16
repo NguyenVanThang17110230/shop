@@ -1,0 +1,121 @@
+.backGroundMain{
+    background-color: white;
+}
+.titleTab{
+    font-size: 20px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+/* .titleTab::after{
+    background-color: #007BFF !important;
+    color: white !important;
+} */
+.containerMain{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: white;
+    background-color:#669DB3FF;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+.titleTable{
+    font-size: 26px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+.fontBadges{
+    font-size: 15px;
+    color: white;
+}
+.menuAction{
+    color: #379AF4;
+    opacity: 1;
+    position: absolute;
+    z-index: 3;
+    padding-left: 15px;
+    padding-top: 4px;
+    font-size: 18px;
+}
+.menuAction:hover{
+    cursor: pointer;
+}
+.dropdown-toggle{
+    display: inline;
+    opacity: 0;
+    z-index: 1;
+} 
+.btn .btn-info{
+    display: inline;
+    opacity: 0;
+    z-index: 1;
+}
+
+.iconInfo1{
+    padding-top: 2px;
+    font-size: 22px;
+    color: #5bc0de;
+}
+
+.iconInfo1:hover{
+    cursor: pointer;
+}
+
+.dropdown-toggle{
+    display: inline ;
+    opacity: 0 !important;
+    z-index: 1;
+  } 
+  .btn .btn-info{
+    display: inline;
+    opacity: 0 !important;
+    z-index: 1;
+  }
+
+.infoOrderFirst{
+    font-weight: 500;
+    padding-right: 10px;
+}
+.infoOrderEnd{
+    padding-left: 10px;
+    font-weight: 500;
+}
+.parent_infoOrder{
+    display: inline-flex;
+}
+.modalSizeMaxWidth{
+    max-width: 1300px !important;
+}
+.th_Sticky{
+    position: sticky;
+    top: 0;
+    background-color: #3694ec !important;
+    color: white;
+  }
+  .tbl-header{
+    height: 400px;
+    overflow-y: scroll;
+  }
+  .textCenterModalTitle {
+    text-align: center;
+    font-size: 20px;
+    padding-left: 25%;
+  }
+  .fontSizeNameTable {
+    font-size: 25px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 0px;
+  }
+  .iconReturn{
+      color: #738fff;
+      font-size: 18px;
+  }
+  .iconReturn{
+      cursor: pointer;
+  }
