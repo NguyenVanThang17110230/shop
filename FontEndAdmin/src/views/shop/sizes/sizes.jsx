@@ -14,11 +14,12 @@ import {
     CCol,
     CDataTable,
     CRow
-} from '@coreui/react'
+} from '@coreui/react';
+import { toast, ToastContainer } from 'react-toastify';
 import "../products/products.css";
 import "../brands/brand.css";
 import "../promotion/promotion.css";
-import "./sizes.css"
+import "./sizes.css";
 import SizesService from '../../../services/SizesService';
 const getBadge = status => {
     switch (status) {
@@ -56,14 +57,14 @@ class Sizes extends Component {
     componentDidMount() {
         this.loadData();
     }
-    async loadData(){
+    async loadData() {
         await SizesService.listSize().then((res) => {
             this.setState({ sizes: res.data.sizes });
         });
         await SizesService.getSizeByTypeSize('VN').then((res) => {
-            console.log("*****",res.data.listSize);
-            this.setState({ sizeVN: [].slice.call(res.data.listSize).sort((a, b) => a.sizeName - b.sizeName)})
-            console.log("&&&&&&",this.state.sizeVN[0]);
+            console.log("*****", res.data.listSize);
+            this.setState({ sizeVN: [].slice.call(res.data.listSize).sort((a, b) => a.sizeName - b.sizeName) })
+            console.log("&&&&&&", this.state.sizeVN[0]);
         });
         await SizesService.getSizeByTypeSize('US').then((res) => {
             this.setState({ sizeUS: [].slice.call(res.data.listSize).sort((a, b) => a.sizeName - b.sizeName) })
@@ -78,19 +79,20 @@ class Sizes extends Component {
         this.setState({ size: newSize });
         console.log(this.state.size);
     }
-    async save(){
+    async save() {
         for (var i = 0; i < this.state.sizes.length; i++) {         //kiểm tra xem có trong cơ sở dữ liệu chưa
             if (this.state.size.sizeName === this.state.sizes[i].sizeName && this.state.size.sizeType === this.state.sizes[i].sizeType) {
-                alert("Size vừa nhập đã tồn tại vui lòng nhập Size và Size Type khác");
+                toast.info("Size vừa nhập đã tồn tại vui lòng nhập Size và Size Type khác");
                 return
             }
         }
         await SizesService.createSize(this.state.size).then(res => {
-            alert("Cập nhật thông tin thành công")
+            toast.success("Thêm thành công")
             this.loadData();
         }, function (error) {
-            alert("Lỗi")
+            toast.error("thêm lỗi rồi")
         });
+        this.setCloseModal();
     }
     setShowModal = () => {
         this.setState({ showModal: true });
@@ -98,8 +100,28 @@ class Sizes extends Component {
     setCloseModal = () => {
         this.setState({ showModal: false });
     }
+    delete = (type) => {
+        var result = window.confirm("Bạn chắc chắn muốn xóa size này không?")
+        if (result) {
+            SizesService.deleteService(type)
+                .then((res) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        toast.success("Xóa thành công");
+                        this.loadData();
+                    }
+                    else {
+                        toast.error("Xóa thất bại");
+                    }
+                })
+                .catch((err) => toast.error(err.response.data));
+        }
+        else {
+            console.log('jjj');
+        }
+    }
     render() {
-        console.log("%%%%%",this.state);
+        console.log("%%%%%", this.state);
         return (
             <div onLoad={this.loadData}>
                 {/* <div className="row">
@@ -110,11 +132,12 @@ class Sizes extends Component {
                         onClick={this.setShowModal}>
                         <p className="fas fa-plus-circle textInBtnAddProduct">
                             Thêm kích thước
-                            </p>
+                        </p>
                     </button>
                     {/* </div> */}
                 </div>
                 <>
+                    <ToastContainer />
                     <Modal
                         show={this.state.showModal}
                         onHide={this.setCloseModal}
@@ -153,7 +176,7 @@ class Sizes extends Component {
                                         })}
                                     </Form.Control>
                                 </Form.Group>
-                                <Button variant="primary" onClick={()=>this.save()}>
+                                <Button variant="primary" onClick={() => this.save()}>
                                     Thêm
                                 </Button>
                             </Form>
@@ -183,7 +206,7 @@ class Sizes extends Component {
                                                     <tbody>
                                                         {this.state.sizeVN.map((sizeVN, idx) => {
                                                             return (
-                                                                <tr key={idx}>
+                                                                <tr onClick={() => this.delete(sizeVN.code)} key={idx}>
                                                                     <td>{idx + 1}</td>
                                                                     <td>{sizeVN.sizeType}</td>
                                                                     <td>{sizeVN.sizeName}</td>
@@ -197,51 +220,51 @@ class Sizes extends Component {
                                         <div className="col-4">
                                             <div className="titleTableSize">Size chuẩn châu âu (UK)</div>
                                             <div className="tbl-header">
-                                            <Table striped hover>
-                                                <thead>
-                                                    <tr>
-                                                        <th className="th_Sticky">#</th>
-                                                        <th className="th_Sticky">Size Type Name</th>
-                                                        <th className="th_Sticky">Size</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {this.state.sizeUK.map((sizeUK, idx) => {
-                                                        return (
-                                                            <tr key={idx}>
-                                                                <td>{idx + 1}</td>
-                                                                <td>{sizeUK.sizeType}</td>
-                                                                <td>{sizeUK.sizeName}</td>
-                                                            </tr>
-                                                        )
-                                                    })}
-                                                </tbody>
-                                            </Table>
+                                                <Table striped hover>
+                                                    <thead>
+                                                        <tr>
+                                                            <th className="th_Sticky">#</th>
+                                                            <th className="th_Sticky">Size Type Name</th>
+                                                            <th className="th_Sticky">Size</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {this.state.sizeUK.map((sizeUK, idx) => {
+                                                            return (
+                                                                <tr key={idx} onClick={() => this.delete(sizeUK.code)}>
+                                                                    <td>{idx + 1}</td>
+                                                                    <td>{sizeUK.sizeType}</td>
+                                                                    <td>{sizeUK.sizeName}</td>
+                                                                </tr>
+                                                            )
+                                                        })}
+                                                    </tbody>
+                                                </Table>
                                             </div>
                                         </div>
                                         <div className="col-4">
                                             <div className="titleTableSize">Size chuẩn mỹ (US)</div>
                                             <div className="tbl-header">
-                                            <Table striped hover>
-                                                <thead>
-                                                    <tr>
-                                                        <th className="th_Sticky">#</th>
-                                                        <th className="th_Sticky">Size Type Name</th>
-                                                        <th className="th_Sticky">Size</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {this.state.sizeUS.map((sizeUS, idx) => {
-                                                        return (
-                                                            <tr key={idx}>
-                                                                <td>{idx + 1}</td>
-                                                                <td>{sizeUS.sizeType}</td>
-                                                                <td>{sizeUS.sizeName}</td>
-                                                            </tr>
-                                                        )
-                                                    })}
-                                                </tbody>
-                                            </Table>
+                                                <Table striped hover>
+                                                    <thead>
+                                                        <tr>
+                                                            <th className="th_Sticky">#</th>
+                                                            <th className="th_Sticky">Size Type Name</th>
+                                                            <th className="th_Sticky">Size</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {this.state.sizeUS.map((sizeUS, idx) => {
+                                                            return (
+                                                                <tr key={idx} onClick={() => this.delete(sizeUS.code)}>
+                                                                    <td>{idx + 1}</td>
+                                                                    <td>{sizeUS.sizeType}</td>
+                                                                    <td>{sizeUS.sizeName}</td>
+                                                                </tr>
+                                                            )
+                                                        })}
+                                                    </tbody>
+                                                </Table>
                                             </div>
                                         </div>
                                     </div>

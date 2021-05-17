@@ -4,6 +4,7 @@ import './scss/style.scss';
 import TheLayout from './containers/TheLayout';
 import LoginContainer from './redux/containers/LoginContainer';
 import Cookies from "js-cookie";
+import 'react-toastify/dist/ReactToastify.css';
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { ToastContainer, toast } from 'react-toastify';
 import {
     Button,
     Modal,
@@ -104,23 +105,24 @@ class Brand extends Component {
             summary: this.state.description,
             image: this.state.imagePath
         }).then(res => {
-            alert("Cập nhật thông tin thành công")
+            toast.success("Thêm thông tin thương hiệu thành công!")
             this.loadData();
         }, function (error) {
+            console.log(error.response);
+            toast.error("Thêm thông tin thương hiệu thất bại!")
         });
+        this.setCloseModal();
     }
     saveEdit = async () => {
         const data = {
-            name:'', 
-            summary:'', 
-            image:''
+            name: '',
+            summary: '',
+            image: ''
         }
-     
-
         if (this.state.imagePathEdit === '') {
             data.image = this.state.stateBrand.image
         }
-        else{
+        else {
             data.image = this.state.imagePathEdit
         }
         data.name = this.state.stateBrand.name
@@ -128,14 +130,14 @@ class Brand extends Component {
         await BrandService.updateBrandById(this.state.stateBrand.code, {
             name: data.name,
             summary: data.summary,
-            image:data.image,
+            image: data.image,
         }).then(res => {
             if (res.status === 200) {
-                alert('Update Brand thành công!')
+                toast.success('Chỉnh sửa thương hiệu thành công!')
             }
             this.loadData()
         }, function (error) {
-            alert("Lỗi không lưu được!")
+            toast.error("Lỗi không lưu được!")
         })
         this.setCloseModalEditBrand()
     }
@@ -159,23 +161,21 @@ class Brand extends Component {
     }
     delete = (type) => {
         var result = window.confirm("Bạn chắc chắn muốn xóa loại thương hiệu này không?")
-        if(result){
-          BrandService.deleteBrand(type)
-          .then((res)=>{
-            console.log(res);
-            if(res.status === 200){
-            //   toast.success(res.data);
-            //   this._getData();
-                console.log('ok ròi ne');
-            }
-            else
-            {
-            //   toast.error(res.data);
-            }
-          })
-        //   .catch((err) => toast.error(err.response.data));
+        if (result) {
+            BrandService.deleteBrand(type)
+                .then((res) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        toast.success("Xóa thành công!!!");
+                        this.loadData();
+                    }
+                    else {
+                        toast.error("Xóa thất bại");
+                    }
+                })
+            //   .catch((err) => toast.error(err.response.data));
         }
-        else{
+        else {
             console.log('jjj');
         }
     }
@@ -197,6 +197,7 @@ class Brand extends Component {
                     {/* </div> */}
                 </div>
                 <>
+                    <ToastContainer />
                     {/* Modal add */}
                     <Modal
                         show={this.state.showModal}
@@ -367,10 +368,10 @@ class Brand extends Component {
                                                                                     </svg>
                                                                                 </Button>
 
-                                                                                <Button 
+                                                                                <Button
                                                                                     size="sm"
                                                                                     className="bv"
-                                                                                    onClick={()=>this.delete(brand.code)}
+                                                                                    onClick={() => this.delete(brand.code)}
                                                                                     color="danger"
                                                                                 >
                                                                                     <svg

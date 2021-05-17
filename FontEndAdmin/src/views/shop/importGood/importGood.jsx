@@ -16,6 +16,7 @@ import {
     CDataTable,
     CRow
 } from '@coreui/react'
+import { toast,ToastContainer } from 'react-toastify';
 import './importGood.css'
 import ProductService from "../../../services/ProductService";
 import BrandService from "../../../services/BrandService";
@@ -79,7 +80,8 @@ class ImportGood extends Component {
             stateProductOnSizeModal: '',
             statePublisherName: [],
             image:'',
-            thumbnail:''
+            thumbnail:'',
+            importDetail:[]
         };
     }
     componentDidMount() {
@@ -106,6 +108,7 @@ class ImportGood extends Component {
         SizesService.listSize().then((res) => {
             this.setState({ sizes: res.data.sizes });
         });
+       
     }
     realTime = () => {
         this.setState({ updateDaily: '1' });
@@ -133,7 +136,7 @@ class ImportGood extends Component {
             this.firstSaveImage(res.data.products.id);
             this.firstSaveSize(res.data.products.id)
         }, function (error) {
-            alert("Lỗi")
+            toast.error("Lỗi")
         });
     }
     firstSaveSize = (idProduct) => {
@@ -151,7 +154,7 @@ class ImportGood extends Component {
         var { products } = this.state
         if (products.name === undefined || products.productCode === undefined || products.price === undefined || products.description === undefined
             || products.brandId === undefined || products.color === undefined || products.categoryId === undefined) {
-            alert("Vui lòng nhập đủ các ô input")
+            toast.info("Vui lòng nhập đủ các ô input")
         }
         else {
             this.saveProduct();
@@ -321,7 +324,8 @@ class ImportGood extends Component {
     }
     saveOnSizeModal = () => {
         this.props.onAddSizeToImport(this.state.stateOnSizeModal);
-        // this.setCloseModal();
+        toast.success("đã thêm size!!!")
+        this.setCloseModal();
     }
     dateCurrent = () => {
         var date = new Date(Date.now()).toLocaleDateString("vi-Vi")
@@ -329,16 +333,18 @@ class ImportGood extends Component {
     }
     //Xử lý lưu vào redux
     saveToRedux = () => {
-
         this.props.onAddProductToImport(this.state.products);
+        toast.success("Đã thêm 1 sản phẩm!")
         this.setCloseModal();
     }
 
     deleteProduct = (id) => {
         this.props.onDeleteProductInImport(id);
+        toast.success("Đã xóa sản phẩm")
     }
     deleteProductSize = (indexProductSize) => {
         this.props.onDeleteProductSizeInImport(indexProductSize);
+        toast.success("Đã xóa size")
     }
     processFinalTotalProduct = (indexProduct) => {
         var { productSizes } = this.props
@@ -381,12 +387,13 @@ class ImportGood extends Component {
 
     processImport = async () => {
         if (this.state.statePublisherName.publisherName === undefined) {
-            alert('Vui lòng nhập nhà cung cấp');
+            toast.info('Vui lòng nhập nhà cung cấp');
         }
         else {
             await ImportService.createImport({
                 publisherName:this.state.statePublisherName.publisherName
             }).then(res => {
+                toast.success("Nhập hàng thành công")
                 this.saveProductInImportDetail(res.data.createImport.code);
             })
             this.deleteImportGoodFromLocalStorage()
@@ -442,12 +449,12 @@ class ImportGood extends Component {
             sizeCode:dataProductSize.sizeCode,
             productCount:dataProductSize.productCount
         }).then(res => {
-            this.firstSaveImportDetail(idImport, importPrice, res.data.productSize.code, idProOnState, amount)
+            this.firstSaveImportDetail(idImport, importPrice,idPro, res.data.productSize.code, idProOnState, amount)
         })
     }
-    async firstSaveImportDetail(idImport, importPrice, productSizeCode, idProOnState, amount) {
+    async firstSaveImportDetail(idImport, importPrice,idPro, productSizeCode, idProOnState, amount) {
         var { productSizes } = this.props
-        const dataImportDetail = {productSizeCode:productSizeCode,importCode:idImport,importPrice:importPrice,amount:amount}
+        const dataImportDetail = {productSizeCode:productSizeCode,importCode:idImport,productCode:idPro,importPrice:importPrice,amount:amount}
         await this.saveImportDetail(dataImportDetail);
     }
     async saveImportDetail(dataImportDetail) {
@@ -458,6 +465,7 @@ class ImportGood extends Component {
         await ImportService.createImportDetails({
             productSizeCode:dataImportDetail.productSizeCode,
             importCode:dataImportDetail.importCode,
+            productCode: dataImportDetail.productCode,
             importPrice:dataImportDetail.importPrice,
             amount:dataImportDetail.amount,
         })
@@ -743,21 +751,17 @@ class ImportGood extends Component {
                                     {this.props.productSizes ?     //kiểm tra xem có tồn tại hay chưa
                                         <tbody>
                                             {this.props.productSizes.map((ProductSizes, idx) => {
-                                                if (ProductSizes.productSize.productId === this.state.stateOnSizeModal.productId) {
                                                     for (var i = 0; i < this.state.sizes.length; i++) {
-                                                        if (this.state.sizes[i].id === parseInt(ProductSizes.productSize.sizeId)) {       //điểu kiện để hiển thị têm size ra
+                                                        if (this.state.sizes[i].code === ProductSizes.productSize.sizeCode) {       //điểu kiện để hiển thị têm size ra
                                                             return (
                                                                 <tr key={idx}>
-                                                                    <td>{this.state.sizes[i].sizeName}</td>
+                                                                    <td>{this.state.sizes[i].sizeType +": "+ this.state.sizes[i].sizeName}</td>
                                                                     <td>{ProductSizes.productSize.productCount}</td>
                                                                     <td><i className="fas fa-trash-alt trashIconOnModalProductSize" onClick={() => this.deleteProductSize(idx)}></i></td>
                                                                 </tr>
                                                             )
                                                         }
                                                     }
-
-                                                }
-                                                else { return }
                                             })}
                                         </tbody> : null}
                                 </Table>
@@ -781,6 +785,7 @@ class ImportGood extends Component {
                 {this._viewModalAddProduct()}
                 {this._viewSize()}
                 <>
+                <ToastContainer />
                     <CRow>
                         <CCol>
                             <CCard>

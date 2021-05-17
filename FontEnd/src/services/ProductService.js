@@ -13,7 +13,7 @@ const getProduct = id => Api.get(`${Api.url.product}/${id}`)
 const createImage = data => Api.post(Api.url.image, data)
 const createProductSize = data => Api.post(`${Api.url.product}createProductSize`, data)
 const getImageByProductId = id => Api.get(`${Api.url.product}getImageByProductId/${id}`)
-const getProductSizeByProductCode = productCode => Api.get(`${Api.url.product}productSize/${productCode}`)
+const getProductSizeByProductCode = productCode => Api.get(`${Api.url.product}productSize/size/${productCode}`)
 // const getProduct = () => Api.get(`${Api.url.product}/${id}`)
 export default{
     createProduct : createProduct,

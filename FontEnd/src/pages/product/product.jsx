@@ -104,7 +104,7 @@ class Product extends Component {
               {/* <p className="card-text descriptionProduct">{product.description}</p> */}
               {product.promotion === null ?
                 <div className="mt-3 p pFontSize">{formatter.format(parseFloat(product.sellPrice))}</div> :
-                <div className="mt-3 p pFontSize">{formatter.format(parseFloat(product.sellPrice + 50000))}</div>
+                <div className="mt-3 p pFontSize">{formatter.format(parseFloat(product.sellPrice))}</div>
               }
               <div className="row">
                 <div className="col-4">

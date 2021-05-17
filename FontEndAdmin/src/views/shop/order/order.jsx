@@ -19,6 +19,11 @@ import {
 } from '@coreui/react'
 
 import OrderService from '../../../services/OrderService';
+import ProductService from "../../../services/ProductService";
+import BrandService from "../../../services/BrandService";
+import CategoryService from "../../../services/CategoryService";
+import GroupService from "../../../services/GroupService";
+import SizesService from '../../../services/SizesService';
 import './order.css'
 class Order extends Component {
     state = {
@@ -28,7 +33,14 @@ class Order extends Component {
         realTime: false,
 
         stateShowModalInfo: false,
-        stateOrderOnModal: []
+        stateOrderOnModal: [],
+        stateOderz:[],
+        listProduct: [],
+        brand: [],
+        category: [],
+        group: [],
+        sizes: [],
+        data:[],
 
     }
     componentDidMount() {
@@ -39,9 +51,92 @@ class Order extends Component {
             this.setState({ stateOrder: res.data.orders })
         })
         this.realTime();
-
+        ProductService.listProduct().then((res) => {
+            this.setState({ listProduct: res.data.products.sort((a, b) => a.id - b.id) });
+            
+        });
+        ProductService.listProductSize().then((res) => {
+            this.setState({ listProductSize: res.data.productSize});
+            
+        });
+        BrandService.listBrand().then((res) => {
+            this.setState({ brand: res.data.brands });
+            
+        });
+        CategoryService.listCategory().then((res) => {
+            this.setState({ category: res.data.categories })
+            
+        });
+        GroupService.listGroup().then((res) => {
+            this.setState({ group: res.data.Groups })
+            
+        })
+        SizesService.listSize().then((res) => {
+            this.setState({ sizes: res.data.sizes });
+        });
+    }
+    viewProCode = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.code
+        }
+    }
+    viewProName = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.name
+        }
+    }
+    viewProIm = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.importPrice
+        }
+    }
+    viewProSe = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.sellPrice
+        }
+    }
+    viewColor = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.color
+        }
+    }
+    viewBrand = code =>{
+        const { listProduct } = this.state
+        const { brand } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            const test2 = brand.find(x=> x.code === test.brandCode)
+            if(test2){
+                return test2.name
+            }
+        }
+    }
+    viewSize = code =>{
+        const { sizes } = this.state
+        const { category } = this.state
+        const { listProductSize } = this.state
+        const test = listProductSize.find(x=> x.code === code)
+        if(test){
+            const test2 = sizes.find(x=> x.code === test.sizeCode)
+            if(test2){
+                return test2.sizeType + ": " + test2.sizeName
+            }
+        }
     }
     setShowModalInfo = (order) => {
+        OrderService.getOderDetail(order).then((res) => {
+            this.setState({ stateOderz: res.data.orderDetails })
+        })
         this.setState({ stateShowModalInfo: true })
         this.setState({ stateOrderOnModal: order })
         console.log(order)
@@ -80,7 +175,7 @@ class Order extends Component {
     }
     changeStatus = (status, code) => {
         console.log("ahihi",status);
-        OrderService.updateOrder({ 'status': status }, code).then(res => {
+        OrderService.updateStatus({ 'status': status }, code).then(res => {
             console.log("^^",res.data)
         })
         setInterval(this.loadData(), 5000)
@@ -127,8 +222,8 @@ class Order extends Component {
                                     <CCol>
                                         <CCard>
                                             <CCardHeader>
-                                                <p className="fontSizeNameTable">Hóa đơn nhập hàng</p>
-                                                <p className="fontSizeNameTable">({this.state.stateOrderOnModal.code})</p>
+                                                <p className="fontSizeNameTable">Hóa đơn bán hàng</p>
+                                                <p className="fontSizeNameTable">({this.state.stateOrderOnModal})</p>
                                             </CCardHeader>
                                             <CCardBody>
                                                 <div className="tbl-header">
@@ -144,23 +239,23 @@ class Order extends Component {
                                                                 <th className="th_Sticky">Price Im</th>
                                                                 <th className="th_Sticky">Price Sell</th>
                                                                 <th className="th_Sticky">Quantity</th>
-                                                                <th className="th_Sticky">Return</th>
+                                                                {/* <th className="th_Sticky">Return</th> */}
                                                             </tr>
                                                         </thead>
 
                                                         {/* Show danh sách các sản phẩm */}
-                                                        {this.state.stateOrderOnModal.OrderDetails !== undefined ?
+                                                        {this.state.stateOrderOnModal !== undefined ?
                                                             <tbody>
-                                                                {this.state.stateOrderOnModal.OrderDetails.sort((a,b)=>a.id - a.id).map((orderDetails, idx) => {
+                                                                {this.state.stateOderz.map((orderDetails, idx) => {
                                                                     if (orderDetails.isReturn == null) {
                                                                         return (
                                                                             <tr key={idx}>
                                                                                 <td>{idx + 1}</td>
-                                                                                <td>{orderDetails.ProductSize.Product.productCode}</td>
-                                                                                <td>{orderDetails.ProductSize.Product.name}</td>
-                                                                                <td>{orderDetails.ProductSize.Product.color}</td>
-                                                                                <td>{orderDetails.ProductSize.Product.Brand.name}</td>
-                                                                                <td>{orderDetails.ProductSize.Size.sizeName}</td>
+                                                                                <td>{this.viewProCode(orderDetails.productCode)}</td>
+                                                                                <td>{this.viewProName(orderDetails.productCode)}</td>
+                                                                                <td>{this.viewColor(orderDetails.productCode)}</td>
+                                                                                <td>{this.viewBrand(orderDetails.productCode)}</td>
+                                                                                <td>{this.viewSize(orderDetails.productSizeCode)}</td>
                                                                                 {/* <td>
                                                                             <div className="view" onClick={() => this.setShowModalViewSizeProduct(idx)}>Thêm Size</div>
                                                                             <div className="boxSize">
@@ -180,10 +275,10 @@ class Order extends Component {
 
                                                                             </div>
                                                                         </td> */}
-                                                                                <td>{formatter.format(orderDetails.ProductSize.Product.importPrice)}</td>
-                                                                                <td>{formatter.format(orderDetails.ProductSize.Product.sellPrice)}</td>
-                                                                                <td>{orderDetails.unitAmount}</td>
-                                                                                <td><i class="fas fa-undo-alt iconReturn" onClick={() => this.returnProduct(orderDetails.id)}></i></td>
+                                                                                <td>{formatter.format(this.viewProIm(orderDetails.productCode))}</td>
+                                                                                <td>{formatter.format(this.viewProSe(orderDetails.productCode))}</td>
+                                                                                <td>{orderDetails.amount}</td>
+                                                                                {/* <td><i class="fas fa-undo-alt iconReturn" onClick={() => this.returnProduct(orderDetails.code)}></i></td> */}
                                                                                 {/* <td>{this.processFinalTotalProduct(idx)}</td> */}
                                                                                 {/* <td>
                                                                             <i className="fas fa-trash-alt trashIcon" onClick={() => this.deleteProduct(idx)}></i>
@@ -250,7 +345,7 @@ class Order extends Component {
                                                 <td>{this.processStatus(order.status)}</td>
                                                 <td>{this.processPayment(order.payment)}</td>
                                                 <td>{formatter.format(order.totalPrice)}</td>
-                                                <td><i class="fas fa-info-circle iconInfo1 " onClick={() => this.setShowModalInfo(order)}></i></td>
+                                                <td><i class="fas fa-info-circle iconInfo1 " onClick={() => this.setShowModalInfo(order.code)}></i></td>
                                                 <td>
                                                     {/* <div class="dropdown">
                                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

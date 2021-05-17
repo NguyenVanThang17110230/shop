@@ -21,8 +21,8 @@ class Footer extends Component {
                                             </div>
                                             <div className="footer-tittle">
                                                 <div className="footer-pera">
-                                                    <div>Địa chỉ: 1, Võ Văn Ngân, Quận Thủ Đức, HCM</div>
-                                                    <div>Sđt: (028) 38 753 443</div>
+                                                    <div>Địa chỉ: Sài Gòn</div>
+                                                    <div>Sđt: (068) 686 868</div>
                                                     <div>Email : shopShoe@gmail.com.vn</div>
                                                     <div>Thời gian làm việc: Từ 07h30 đến 12h15, 13h15 đến 21h30 các ngày trong tuần ( Trừ ngày Lễ, Tết)</div>
                                                 </div>

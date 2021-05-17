@@ -30,13 +30,20 @@ class ImportBill extends Component {
         stateImports: [],       ///state chứa thông tin hóa đơn nhập lấy dưới backend lên
         stateProducts: [],      ///state chứa thông tin 
         stateShowModalInfo: false,      //state để mở/đóng modal
-
-        stateImportOnModal: [],            //chứa 1 import dùng show trong modal
-
-
+        stateImportDetail: [],
+        stateImportOnModal: [],
+        stateImportDetailZ: [],
+        listProduct: [],
+        brand: [],
+        category: [],
+        group: [],
+        sizes: [],
+        data:[],
+        stateImportDetail:[],
     }
     componentDidMount() {
         this.loadData();
+        
     }
     loadData = () => {
         ImportService.listImport().then(res => {
@@ -45,20 +52,67 @@ class ImportBill extends Component {
             })
         })
 
+        ImportService.getAllImprtDetail().then(res => {
+            console.log("dd", res.data);
+            this.setState({
+                stateImportDetail: res.data.importDetails
+            })
+        })
+
+        ProductService.listProduct().then((res) => {
+            this.setState({ listProduct: res.data.products.sort((a, b) => a.id - b.id) });
+            
+        });
+        ProductService.listProductSize().then((res) => {
+            this.setState({ listProductSize: res.data.productSize});
+            
+        });
+        BrandService.listBrand().then((res) => {
+            this.setState({ brand: res.data.brands });
+            
+        });
+        CategoryService.listCategory().then((res) => {
+            this.setState({ category: res.data.categories })
+            
+        });
+        GroupService.listGroup().then((res) => {
+            this.setState({ group: res.data.Groups })
+            
+        })
+        SizesService.listSize().then((res) => {
+            this.setState({ sizes: res.data.sizes });
+        });
+
+
     }
     countQuantityInImport = (importBill) => {
-        var quantity = 0;
-        for (var i = 0; i < importBill.ImportDetails.length ; i++) {
-            quantity += parseInt(importBill.ImportDetails[i].amount);
-        }
-        return quantity;
+        const { stateImportDetail } = this.state;
+        console.log("ds", stateImportDetail);
+        // const a = stateImportDetail.filter(x => x.importCode === importBill)
+        // console.log("vao day",a);
+        // if(a.length>0){
+        //     var quantity = 0;
+        //     for (var i = 0; i < a.length; i++) {
+        //         quantity += parseInt(a[i].amount);
+        //     }
+        //     console.log("d",quantity);
+        //     return quantity;
+        // }
+
     }
     countTotalPriceInImport = (importBill) => {
-        var totalPrice = 0;
-        for (var i = 0; i < importBill.ImportDetails.length; i++) {
-            totalPrice += parseInt(importBill.ImportDetails[i].importPrice)*parseInt(importBill.ImportDetails[i].amount);
-        }
-        return totalPrice;
+        // ImportService.getImportById(importBill).then(res => {
+        //     var totalPrice = 0;
+        //     for (var i = 0; i < res.data.importDetail.length; i++) {
+        //         totalPrice += parseInt(res.data.importDetail[i].importPrice) * parseInt(res.data.importDetail[i].amount);
+        //     }
+        //     return totalPrice;
+        // })
+        // var totalPrice = 0;
+        // for (var i = 0; i < importBill.ImportDetails.length; i++) {
+        //     totalPrice += parseInt(importBill.ImportDetails[i].importPrice)*parseInt(importBill.ImportDetails[i].amount);
+        // }
+        // return totalPrice;
     }
     processDateCreate = (date) => {
         var dateProcess;
@@ -67,16 +121,90 @@ class ImportBill extends Component {
         return dateProcess
     }
     setShowModalInfo = (importBill) => {
+        ImportService.getImportById(importBill).then((res) => {
+            this.setState({ stateImportDetailZ: res.data.importDetail })
+        })
         this.setState({ stateShowModalInfo: true })
-        this.setState({stateImportOnModal: importBill})
+        this.setState({ stateImportOnModal: importBill })
         console.log(importBill)
         console.log(this.state.stateImportOnModal)
+       
+    }
+    viewData = () => {
+        const { stateImportDetailZ } = this.state
+        const { listProduct } = this.state
+        const { brand } = this.state
+        const { category } = this.state
+        const { sizes } = this.state
+        const test = listProduct.find(x=> x.code === stateImportDetailZ[0].productCode)
+        if(test){
+            console.log("cb",test);
+            this.setState({data:test})
+        }
+    }
+    viewProCode = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.code
+        }
+    }
+    viewProName = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.name
+        }
+    }
+    viewProIm = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.importPrice
+        }
+    }
+    viewProSe = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.sellPrice
+        }
+    }
+    viewColor = code =>{
+        const { listProduct } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            return test.color
+        }
+    }
+    viewBrand = code =>{
+        const { listProduct } = this.state
+        const { brand } = this.state
+        const test = listProduct.find(x=> x.code === code)
+        if(test){
+            const test2 = brand.find(x=> x.code === test.brandCode)
+            if(test2){
+                return test2.name
+            }
+        }
+    }
+    viewCate = code =>{
+        const { sizes } = this.state
+        const { category } = this.state
+        const { listProductSize } = this.state
+        const test = listProductSize.find(x=> x.code === code)
+        if(test){
+            const test2 = sizes.find(x=> x.code === test.sizeCode)
+            if(test2){
+                return test2.sizeType + ": " + test2.sizeName
+            }
+        }
     }
     setCloseModalInfo = () => {
         this.setState({ stateShowModalInfo: false })
     }
     render() {
-        console.log("state",this.state);
+        console.log("state", this.state);
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
@@ -101,8 +229,8 @@ class ImportBill extends Component {
                                     <CCol>
                                         <CCard>
                                             <CCardHeader>
-                                                <p className="fontSizeNameTable">Hóa đơn bán</p>
-                                                <p className="fontSizeNameTable">({this.state.stateImportOnModal.importCode})</p>
+                                                <p className="fontSizeNameTable">Hóa đơn nhập</p>
+                                                <p className="fontSizeNameTable">({this.state.stateImportOnModal})</p>
                                             </CCardHeader>
                                             <CCardBody>
                                                 <div className="tbl-header">
@@ -122,18 +250,18 @@ class ImportBill extends Component {
                                                         </thead>
 
                                                         {/* Show danh sách các sản phẩm */}
-                                                        {this.state.stateImportOnModal.ImportDetails !==undefined?
-                                                        <tbody>
-                                                            {this.state.stateImportOnModal.ImportDetails.map((importDetails, idx) => {
-                                                                return (
-                                                                    <tr key={idx}>
-                                                                        <td>{idx + 1}</td>
-                                                                        <td>{importDetails.ProductSize.Product.productCode}</td>
-                                                                        <td>{importDetails.ProductSize.Product.name}</td>
-                                                                        <td>{importDetails.ProductSize.Product.color}</td>
-                                                                        <td>{importDetails.ProductSize.Product.Brand.name}</td>
-                                                                        <td>{importDetails.ProductSize.Size.sizeName}</td>
-                                                                        {/* <td>
+                                                        {this.state.stateImportOnModal !== undefined ?
+                                                            <tbody>
+                                                                {this.state.stateImportDetailZ.map((importDetails, idx) => {
+                                                                    return (
+                                                                        <tr key={idx}>
+                                                                            <td>{idx + 1}</td>
+                                                                            <td>{this.viewProCode(importDetails.productCode)}</td>
+                                                                            <td>{this.viewProName(importDetails.productCode)}</td>
+                                                                            <td>{this.viewColor(importDetails.productCode)}</td>
+                                                                            <td>{this.viewBrand(importDetails.productCode)}</td>
+                                                                            <td>{this.viewCate(importDetails.productSizeCode)}</td>
+                                                                            {/* <td>
                                                                             <div className="view" onClick={() => this.setShowModalViewSizeProduct(idx)}>Thêm Size</div>
                                                                             <div className="boxSize">
                                                                                 {this.props.productSizes.map((ProductSizes, idxa) => {
@@ -152,24 +280,24 @@ class ImportBill extends Component {
 
                                                                             </div>
                                                                         </td> */}
-                                                                        <td>{formatter.format(importDetails.ProductSize.Product.importPrice)}</td>
-                                                                        <td>{formatter.format(importDetails.ProductSize.Product.sellPrice)}</td>
-                                                                        <td>{importDetails.amount}</td>
-                                                                        {/* <td>{this.processFinalTotalProduct(idx)}</td> */}
-                                                                        {/* <td>
+                                                                            <td>{formatter.format(this.viewProIm(importDetails.productCode))}</td>
+                                                                            <td>{formatter.format(this.viewProSe(importDetails.productCode))}</td>
+                                                                            <td>{importDetails.amount}</td>
+                                                                            {/* <td>{this.processFinalTotalProduct(idx)}</td> */}
+                                                                            {/* <td>
                                                                             <i className="fas fa-trash-alt trashIcon" onClick={() => this.deleteProduct(idx)}></i>
                                                                         </td> */}
-                                                                    </tr>
-                                                                )
-                                                            }
-                                                            )}
-                                                        </tbody>
-                                                        :null}
+                                                                        </tr>
+                                                                    )
+                                                                }
+                                                                )}
+                                                            </tbody>
+                                                            : null}
                                                     </Table>
                                                 </div>
                                             </CCardBody>
                                             <CCardFooter>
-                                                
+
 
                                             </CCardFooter>
                                         </CCard>
@@ -184,7 +312,7 @@ class ImportBill extends Component {
                         <CCol>
                             <CCard>
                                 <CCardHeader>
-                                    <p className="fontSizeNameTable">Danh sách sản phẩm</p>
+                                    <p className="fontSizeNameTable">Danh sách hóa đơn nhập</p>
                                 </CCardHeader>
                                 <CCardBody>
                                     <Table striped hover>
@@ -204,17 +332,17 @@ class ImportBill extends Component {
                                         <tbody>
                                             {this.state.stateImports.map((importList, idx) => {
                                                 return (
-                                                    <tr key={importList.id}>
+                                                    <tr key={idx}>
                                                         <td>{idx + 1}</td>
-                                                        <td>{importList.importCode}</td>
+                                                        <td>{importList.code}</td>
                                                         <td>{importList.publisherName}</td>
-                                                        <td>{this.countQuantityInImport(importList)}</td>
-                                                        <td>{formatter.format(this.countTotalPriceInImport(importList))}</td>
+                                                        <td>{this.countQuantityInImport(importList.code)}</td>
+                                                        <td>{formatter.format(this.countTotalPriceInImport(importList.code))}</td>
                                                         <td>{this.processDateCreate(importList.createdAt)}</td>
                                                         <td>
                                                             <i
                                                                 className="fas fa-info-circle iconInfo"
-                                                                onClick={() => this.setShowModalInfo(importList)}></i>
+                                                                onClick={() => this.setShowModalInfo(importList.code)}></i>
                                                         </td>
                                                     </tr>
                                                 )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import LoginUser from "../../../services/UserService";
+import { toast, ToastContainer } from 'react-toastify';
 import Cookies from "js-cookie";
 import './login.css'
 import {
@@ -30,37 +31,48 @@ class Login extends Component {
     console.log("email",email);
     console.log("password",password);
     var seft = this;
-    LoginUser.login(email, password).then(res => {
-      if(res.data.isAdmin === true){
-        Cookies.set('loginInfoAdmin', JSON.stringify(res.data.token), { expires: 1 / 24 });
-        LoginUser.getUser().then((res) => {
-          var userInfo = res.data.users;
-          console.log(userInfo)
-          this.props.onUserLogin(userInfo);
-        });
-        
-      }
-      else {
-        alert('Bạn không phải admin vui lòng thử lại!');
-      }
-    },function (error) {
-      console.log('do day');
-      // Do something with response error
-      if (error.response.status === 401) {
-        seft.isErrorTrue();
-        document.getElementById("errModal").click();
-
-      }
-      else {
-        console.log(error.response.status);
-      }
-    })
+    if(email !== "" && password !== ""){
+      LoginUser.login(email, password).then(res => {
+        if(res.data.isAdmin === true){
+          Cookies.set('loginInfoAdmin', JSON.stringify(res.data.token), { expires: 1 / 24 });
+          LoginUser.getUser().then((res) => {
+            var userInfo = res.data.users;
+            console.log(userInfo)
+            this.props.onUserLogin(userInfo);
+          });
+          toast.success("Đăng nhập thành công")
+        }
+        else {
+          toast.error('Bạn không phải admin vui lòng thử lại!');
+        }
+      },function (error) {
+        console.log('do day');
+        if (error.response.status === 401) {
+          seft.isErrorTrue();
+          document.getElementById("errModal").click();
+  
+        }
+        if (error.response.status === 500) {
+          toast.error("Sai tài khoản hoặc mật khâu!");
+        }
+        else {
+          toast.error("lỗi rồi!");
+        }
+      })
+    }
+    else{
+      toast.info("Hãy nhập đầy đủ thông tin trước khi đăng nhập!");
+    }
+     
+    
+    
     
   }
   render() {
     
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
+        <ToastContainer />
         <CContainer>
           <CRow className="justify-content-center">
             <CCol md="8">

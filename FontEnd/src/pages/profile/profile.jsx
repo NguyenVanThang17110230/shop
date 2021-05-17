@@ -198,6 +198,7 @@ class Profile extends Component {
         return dateProcess
     }
     render() {
+        console.log("ggg",this.state);
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
@@ -338,38 +339,38 @@ class Profile extends Component {
                                     <div className="tab-pane fade" id="v-pills-order" role="tabpanel" aria-labelledby="v-pills-order-tab">
                                         <div className="titleTable">Danh sách tất cả đơn hàng</div>
                                         <div className="row paddingRow">
-                                            <div className="col-md-2">
+                                            <div className="col-md-3">
                                                 <p>Mã đơn hàng</p>
                                             </div>
-                                            <div className="col-md-2 PaddingCol-1">
+                                            <div className="col-md-3 PaddingCol-1">
                                                 <p>Ngày mua</p>
                                             </div>
                                             
-                                            <div className="col-md-2">
+                                            <div className="col-md-3">
                                                 <p>Tổng tiền</p>
                                             </div>
-                                            <div className="col-md-2">
-                                                <p className="pMarginStatusOder">Trạng thái đơn</p>
-                                                <p className="pPaddingRight">hàng</p>
+                                            <div className="col-md-3">
+                                                <p className="pMarginStatusOder">Trạng thái đơn hàng</p>
+                                              
                                             </div>
                                         </div>
                                         <hr className="paddingHr" />
-                                        {this.state.stateListOrder.filter((a) => a.userId = this.state.user.id).sort((a, b) => a.status - b.status).map((order, idx) => {
+                                        {this.state.stateListOrder.filter((a) => a.userCode = this.state.user.code).sort((a, b) => a.status - b.status).map((order, idx) => {
                                             if (parseInt(order.totalPrice) !== 0) {
                                             return(
                                             <div className="row paddingRow paddingRow">
-                                                <div className="col-md-2">
-                                                    <Link className=" fontTextOder LinkColor" to={`/invoicedetail/${order.id}`}>{order.orderCode}</Link>
+                                                <div className="col-md-3">
+                                                    <Link className=" fontTextOder LinkColor" to="#">{order.code}</Link>
                                                 </div>
-                                                <div className="col-md-2 PaddingCol-1">
+                                                <div className="col-md-3 PaddingCol-1">
                                                     <p className=" fontTextOder">{this.processDateOrder(order.createdAt)}</p>
                                                 </div>
                                                 
 
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <p className=" fontTextOder">{formatter.format(order.totalPrice)}</p>
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <p className="pMarginStatusOder fontTextOder">{this.processStatus(order.status)}</p>
                                                 </div>
                                             </div>

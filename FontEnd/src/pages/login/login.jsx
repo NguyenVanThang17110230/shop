@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import history from "../history.js";
 import "../login/login.css";
+import { toast,ToastContainer } from 'react-toastify';
 class Login extends Component {
     state = {
         message: " ",
@@ -23,30 +24,30 @@ class Login extends Component {
         const email = this.emailRef.current.value;
         const password = this.passwordRef.current.value;
         var seft = this;
-        LoginUser.login(email, password).then(res => {
-            Cookies.set('loginInfo', JSON.stringify(res.data.token), { expires: 1 / 24 });
-            LoginUser.getUser().then((res) => {
-                var userInfo = res.data.users;
-                this.props.onUserLogin(userInfo);
-                console.log("aaaaa");
-            }).catch((err)=>{
-                console.log('dddd');
-                console.log(err.response);
-            })
-
-            //redirect to dashboard
-            history.push("/");
-            
-
-        }, function (error) {
-            // Do something with response error
-            // if (error.response.status === 401) {
-            //     seft.isErrorTrue();
-            //     document.getElementById("errModal").click();
-
-            // }
-            console.log(error.response.status);
-        });
+        if(email!=="" && password!==""){
+            LoginUser.login(email, password).then(res => {
+                Cookies.set('loginInfo', JSON.stringify(res.data.token), { expires: 1 / 24 });
+                toast.success("Đăng nhập thành công!")
+                LoginUser.getUser().then((res) => {
+                    var userInfo = res.data.users;
+                    this.props.onUserLogin(userInfo);
+                    console.log("aaaaa");
+                }).catch((err)=>{
+                    console.log('dddd');
+                    console.log(err.response);
+                })
+                setTimeout(() => {
+                    history.push("/");
+                }, 2000);
+                
+            }, function (error) {
+                toast.error("Sai tài khoản hoặc mật khẩu!")
+            });
+        }
+        else{
+            toast.info("Vui lòng nhập đầy đủ thông tin trước khi đăng nhập!")
+        }
+        
         
 
     }
@@ -101,6 +102,7 @@ class Login extends Component {
     render() {
         return (
             <div className="loginbackground">
+                <ToastContainer />
                 <section class="login_part section_padding ">
                     <div class="container">
                         <div class="row align-items-center formRightbackground radiusFormLogin">

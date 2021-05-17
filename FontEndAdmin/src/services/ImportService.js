@@ -12,9 +12,11 @@ const createImportDetails = data => Api.post(`${Api.url.import}/addImportDetail`
 const listImport = () => Api.get(Api.url.import);
 const getImportById = (id) => Api.get(`${Api.url.import}/${id}`);
 // const getProduct = () => Api.get(`${Api.url.product}/${id}`)
+const getAllImprtDetail = () => Api.get(`${Api.url.import}/importDetail`);
 export default{
     createImport : createImport,
     createImportDetails : createImportDetails,
     listImport: listImport,
     getImportById: getImportById,
+    getAllImprtDetail:getAllImprtDetail
 };

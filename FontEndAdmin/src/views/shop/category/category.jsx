@@ -21,6 +21,7 @@ import "../products/products.css";
 import "../brands/brand.css";
 import CategoryService from "../../../services/CategoryService";
 import GroupService from "../../../services/GroupService";
+import { toast,ToastContainer } from 'react-toastify';
 const getBadge = status => {
     switch (status) {
         case 'Active': return 'success'
@@ -39,7 +40,7 @@ class Products extends Component {
         listShowCategory: [],
         group: [],
         showModalEdit: false,
-        stateCategory:[]
+        stateCategory:[],
     };
     componentDidMount() {
         this.loadData();
@@ -67,13 +68,13 @@ class Products extends Component {
         // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
         {
             this.state.group.map((group) => {
-                if (group.name === value) {
+                if (group.code === value) {
                     const newCategory = { ...this.state.categories, [name]: group.code }
                     this.setState({ categories: newCategory });
                 }
             })
         }
-        console.log(this.state.categories)
+        console.log("fff",this.state.categories)
     }
     save = () => {
         CategoryService.createCategory(this.state.categories).then(res => {
@@ -111,7 +112,7 @@ class Products extends Component {
         // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
         {
             this.state.group.map((group) => {
-                if (group.name === value) {
+                if (group.code === value) {
                     const newCategory = { ...this.state.stateCategory, [name]: group.code }
                     this.setState({ stateCategory: newCategory });
                 }
@@ -125,23 +126,52 @@ class Products extends Component {
           .then((res)=>{
             console.log(res);
             if(res.status === 200){
-            //   toast.success(res.data);
+              toast.success("Xóa thành công");
                 this.loadData();
-                console.log('ok ròi ne');
             }
             else
             {
-            //   toast.error(res.data);
+              toast.error("Xóa thất bại");
             }
           })
-        //   .catch((err) => toast.error(err.response.data));
+          .catch((err) => toast.error(err.response.data));
         }
         else{
             console.log('jjj');
         }
     }
-
+    saveEdit = async () => {
+        const data = {
+            name: '',
+            summary: '',
+            groupCode:'',
+        }
+        data.name = this.state.stateCategory.name
+        data.summary = this.state.stateCategory.summary
+        data.groupCode = this.state.stateCategory.groupCode
+        await CategoryService.updateCategoryById(this.state.stateCategory.code, {
+            name: data.name,
+            summary: data.summary,
+            groupCode: data.groupCode
+        }).then(res => {
+            if (res.status === 200) {
+                toast.success('Chỉnh sửa thành công!')
+            }
+            this.loadData()
+        }, function (error) {
+            toast.error("Lỗi không lưu được!")
+        })
+        this.setCloseModalEditBrand()
+    }
+    _viewGroup = code =>{
+        const { group } = this.state;
+        const test = group.find(x => x.code === code);
+        if(test){
+            return test.name
+        }
+    }
     render() {
+        console.log("aaa",this.props);
         const { loading, imageUrl } = this.state;
         const uploadButton = (
             <div>
@@ -158,6 +188,7 @@ class Products extends Component {
                     {/* </div> */}
                 </div>
                 <>
+                <ToastContainer />
                     <Modal
                         show={this.state.showModal}
                         onHide={this.setCloseModal}
@@ -181,7 +212,7 @@ class Products extends Component {
                                     <Form.Label>Nhóm sản phẩm</Form.Label>
                                     <Form.Control
                                         as="select"
-                                        name="groupId"
+                                        name="groupCode"
                                         onChange={this.InputOnChangeGroup}
                                     >
                                         <option>Choose....</option>
@@ -236,9 +267,9 @@ class Products extends Component {
                                     <Form.Label>Nhóm sản phẩm</Form.Label>
                                     <Form.Control
                                         as="select"
-                                        name="groupId"
+                                        name="groupCode"
                                         onChange={this.InputOnChangeGroupEdit}
-                                        value={this.state.stateCategory.name}
+                                        defaultValue={this.state.stateCategory.groupCode}
                                     >
                                         <option>Choose....</option>
                                         {this.state.group.map((group, idx) => {
@@ -263,8 +294,8 @@ class Products extends Component {
                                         value={this.state.stateCategory.summary}
                                     />
                                 </Form.Group>
-                                <Button variant="primary" type="submit" onClick={this.save}>
-                                    Thêm
+                                <Button variant="primary" type="submit" onClick={this.saveEdit}>
+                                Cập nhật
                                 </Button>
                             </Form>
                         </Modal.Body>
@@ -283,6 +314,7 @@ class Products extends Component {
                                             <tr>
                                                 <th>#</th>
                                                 <th>Name</th>
+                                                <th>Group</th>
                                                 <th>Summary</th>
                                                 <th>Action</th>
                                             </tr>
@@ -295,6 +327,7 @@ class Products extends Component {
                                                     <tr key={i}>
                                                         <td>{i + 1}</td>
                                                         <td>{category.name}</td>
+                                                        <td>{this._viewGroup(category.groupCode)}</td>
                                                         <td>{category.summary}</td>
                                                         <td>
                                                             <Button

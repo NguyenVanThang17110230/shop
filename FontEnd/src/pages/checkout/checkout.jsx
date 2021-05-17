@@ -46,7 +46,7 @@ class Checkout extends Component {
             const newUser = {
                 ...this.state.user,
                 ['userId']: user.user.id,
-                ['totalPrice']: this.totalCheckout(),
+                ['totalPrice']: this.showTotal(),
                 ['promotion']: null,
                 //['orderCode']: this.randomStringCodeImport(),  // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
             }
@@ -56,7 +56,7 @@ class Checkout extends Component {
             const newUser = {
                 ...this.state.user,
                 ['userId']: user.user.id,
-                ['totalPrice']: this.totalCheckout(),
+                ['totalPrice']: this.showTotal(),
                 ['promotion']: discount.promotionIsSelect
             } // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
             this.setState({ user: newUser });
@@ -69,9 +69,10 @@ class Checkout extends Component {
         const newOrderDetail = {
             ...this.state.orderDetail, ['orderDetail']: {
                 ['unitAmount']: cart[i].quantity,
-                ['unitPrice']: parseFloat(cart[i].total) / parseFloat(cart[i].quantity),
+                ['unitPrice']: parseFloat(cart[i].product.sellPrice),
                 ['productSizeId']: cart[i].idProductSize,
                 ['orderId']: idOrder,
+                ['productCode']:cart[i].product.code
             }
         } // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
         this.state.stateOrderDetail.push(newOrderDetail)
@@ -233,10 +234,12 @@ class Checkout extends Component {
     }
     async finalSaveOrderDetail(i) {
         var { stateOrderDetail } = this.state;
+        console.log("ccc",stateOrderDetail);
         await OrderService.createOrderDetail(
             {
                 amount:stateOrderDetail[i].orderDetail.unitAmount,
                 price:stateOrderDetail[i].orderDetail.unitPrice,
+                productCode:stateOrderDetail[i].orderDetail.productCode,
                 productSizeCode:stateOrderDetail[i].orderDetail.productSizeId,
                 orderCode:stateOrderDetail[i].orderDetail.orderId,
             })

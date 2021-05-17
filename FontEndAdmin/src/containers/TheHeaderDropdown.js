@@ -6,7 +6,8 @@ import {
   CDropdownMenu,
   CDropdownToggle,
   CImg
-} from '@coreui/react'
+} from '@coreui/react';
+import Cookies from "js-cookie";
 import CIcon from '@coreui/icons-react'
 
 const TheHeaderDropdown = () => {
@@ -80,9 +81,12 @@ const TheHeaderDropdown = () => {
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
+        <CDropdownItem onClick={() => {
+            Cookies.remove('loginInfoAdmin');
+             window.location.reload();
+        }}>
           <CIcon name="cil-lock-locked" className="mfe-2" /> 
-          Lock Account
+          Logout Account
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
