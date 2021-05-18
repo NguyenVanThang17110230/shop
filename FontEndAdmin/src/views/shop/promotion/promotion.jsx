@@ -46,7 +46,7 @@ class Products extends Component {
     }
     InputOnChange = (event) => {
         const { name, value } = event.target; // đặt biến để phân rã các thuộc tính trong iout ra
-        if (name === 'promotionValue') {
+        if (name === 'value') {
             if(value <= 100){
                 const newPromotion = { ...this.state.promotion, [name]: value / 100 } // ... là clone tat ca thuoc tinh cua major có qua thuộc tính mới, [name] lấy cái name đè lên name của tồn tại nếu k có thì thành 1 cái field mới
                 this.setState({ promotion: newPromotion });
@@ -90,7 +90,7 @@ class Products extends Component {
                         onClick={this.setShowModal}>
                         <p class="fas fa-plus-circle textInBtnAddProduct">
                             Thêm mã giảm giá
-                            </p>
+                        </p>
                     </button>
                     {/* </div> */}
                 </div>
@@ -116,7 +116,7 @@ class Products extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formBasicName">
                                     <Form.Label>Code giảm giá <div className="notice">(Chỉ nhập số)</div></Form.Label>
-                                    <Form.Control type="text" name="promotionValue" placeholder="% giảm giá hoặc tiền giảm" name="promotionValue" onChange={this.InputOnChange} />
+                                    <Form.Control type="text" name="value" placeholder="% giảm giá hoặc tiền giảm" name="promotionValue" onChange={this.InputOnChange} />
                                 </Form.Group>
                                 <div className="row">
                                     <div className="col-6">

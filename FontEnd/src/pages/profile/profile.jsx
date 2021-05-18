@@ -10,6 +10,7 @@ import {
     Table,
     Dropdown
 } from "react-bootstrap";
+import { toast, ToastContainer } from 'react-toastify';
 class Profile extends Component {
     state = {
         closeForm: false,
@@ -61,11 +62,11 @@ class Profile extends Component {
     }
     changeInfo = () => {
         UserService.updateUser(this.state.user).then(res => {
-            alert("Cập nhật thông tin thành công")
+            toast.success("Sửa thông tin thành công!")
             this.loadData();
 
         }, function (error) {
-
+            toast.error("Sửa thông tin thất bại")
         });
     }
     checkGenderFemale = (event) => {        //biến index để check là nam hay nữ
@@ -197,6 +198,22 @@ class Profile extends Component {
         dateProcess = new Date(date).toLocaleDateString("vi-Vi")
         return dateProcess
     }
+    hienThiDate=()=>{
+        //document.getElementsByName('dob').value=this.state.dataedituser.dob;
+    
+        var d = new Date(this.state.user.birthday),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+          return [year, month, day].join('-');
+        
+      }
     render() {
         console.log("ggg",this.state);
         const formatter = new Intl.NumberFormat('vi-VN', {
@@ -206,6 +223,7 @@ class Profile extends Component {
         })
         return (
             <div className="backGroundLayoutProfile" onLoad={this.componentDidMount}>
+                <ToastContainer />
                 <div class="slider-area ">
                     <div class="single-slider slider-height2 d-flex align-items-center data-background-profile">
                         <div class="container">
@@ -271,7 +289,7 @@ class Profile extends Component {
                                         <div class="form-group row">
                                             <label for="inputPassword" class="col-sm-2 col-form-label">Ngày sinh</label>
                                             <div class="col-sm-10">
-                                                <Form.Control type="date" name="birthday" className="form-control form-control-Profile" onChange={this.InputOnChange} value={this.state.user.birthday || ''} />
+                                                <Form.Control type="date" name="birthday" className="form-control form-control-Profile" onChange={this.InputOnChange} value={this.hienThiDate() || ''} />
                                                 {/* <input type="date" name="birthday" class="form-control form-control-Profile" id="inputDatetime" onChange={this.InputOnChange} value={this.state.user.birthday || ''} /> */}
                                             </div>
                                         </div>

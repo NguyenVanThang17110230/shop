@@ -321,8 +321,7 @@ class ImportBill extends Component {
                                                 <th>#</th>
                                                 <th>Import code</th>
                                                 <th>Publisher Name</th>
-                                                <th>Total Quantity Product</th>
-                                                <th>Total Price Import</th>
+                                                
                                                 <th>Date import</th>
                                                 <th>Action</th>
                                             </tr>
@@ -336,8 +335,6 @@ class ImportBill extends Component {
                                                         <td>{idx + 1}</td>
                                                         <td>{importList.code}</td>
                                                         <td>{importList.publisherName}</td>
-                                                        <td>{this.countQuantityInImport(importList.code)}</td>
-                                                        <td>{formatter.format(this.countTotalPriceInImport(importList.code))}</td>
                                                         <td>{this.processDateCreate(importList.createdAt)}</td>
                                                         <td>
                                                             <i

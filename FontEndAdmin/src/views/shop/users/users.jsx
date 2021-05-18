@@ -119,9 +119,26 @@ class Products extends Component {
   saveBlockUer = () => {
 
   }
-  processTimesTampToDate = (UNIX_Timestamp) =>{
+  processTimesTampToDate = (UNIX_Timestamp) => {
     var date = new Date(UNIX_Timestamp).toLocaleDateString("vi-Vi")
     return date;
+  }
+  hienThiDate = (x) => {
+    //document.getElementsByName('dob').value=this.state.dataedituser.dob;
+    if (x) {
+      var d = new Date(x),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+      if (month.length < 2)
+      month = '0' + month;
+      if (day.length < 2)
+      day = '0' + day;
+      return [year, month, day].join('-');
+    }
+    else{
+      return "none"
+    }
   }
 
   render() {
@@ -304,39 +321,30 @@ class Products extends Component {
                         <th>Ngày sinh</th>
                         <th>Trạng thái</th>
                         <th>Ngày tham gia</th>
-                        <th>Hành động</th>
+
 
                       </tr>
                     </thead>
                     <tbody>
                       {this.state.listUser.map((listUser, idx) => {
-                        if(listUser.isAdmin === false){
-                        return (
-                          <tr key={idx}>
-                            <td className="tableFieldName">{listUser.fullName}</td>
-                            <td>{listUser.email}</td>
-                            <td>{listUser.phone}</td>
-                            <td>{listUser.address}</td>
-                            <td>{this.processGender(listUser.gender)}</td>
-                            <td>{listUser.birthday}</td>
-                            <td>
-                              <CBadge color={getBadge('Active')}>
-                                {'Active'}
-                              </CBadge>
-                            </td>
-                            <td>{this.processTimesTampToDate(listUser.createdAt)}</td>
-                            <td>
-                              <div className="row">
-                                <div className="col-3 info">
-                                  <i class="fas fa-info-circle" onClick={this.setShowModal}></i>
-                                </div>
-                                <div className="col-3 delete">
-                                  <i class="fas fa-user-minus" onClick={this.blockUser}></i>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        )
+                        if (listUser.isAdmin === false) {
+                          return (
+                            <tr key={idx}>
+                              <td className="tableFieldName">{listUser.fullName}</td>
+                              <td>{listUser.email}</td>
+                              <td>{listUser.phone||"none"}</td>
+                              <td>{listUser.address||"none"}</td>
+                              <td>{this.processGender(listUser.gender)}</td>
+                              <td>{this.hienThiDate(listUser.birthday)}</td>
+                              <td>
+                                <CBadge color={getBadge('Active')}>
+                                  {'Active'}
+                                </CBadge>
+                              </td>
+                              <td>{this.processTimesTampToDate(listUser.createdAt)}</td>
+
+                            </tr>
+                          )
                         }
                       })}
                     </tbody>

@@ -83,12 +83,7 @@ export default [
     to: '/shop/category',
     icon: "cil-spreadsheet",
   },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Mã giảm giá',
-    to: '/shop/promotion',
-    icon: "cil-code",
-  },
+  
   // {
   //   _tag: 'CSidebarNavTitle',
   //   _children: ['Components']
