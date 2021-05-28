@@ -108,6 +108,7 @@ class ImportGood extends Component {
         SizesService.listSize().then((res) => {
             this.setState({ sizes: res.data.sizes });
         });
+        
        
     }
     realTime = () => {
@@ -395,13 +396,15 @@ class ImportGood extends Component {
             }).then(res => {
                 toast.success("Nhập hàng thành công")
                 this.saveProductInImportDetail(res.data.createImport.code);
+                
             })
             this.deleteImportGoodFromLocalStorage()
-        }
+        } 
     }
     async deleteImportGoodFromLocalStorage() {
         await localStorage.removeItem("STATE_IMPORT");
         await this.loadData();
+        
     }
     findIdProductNewCreate = () => {
         var idProduct;
@@ -431,17 +434,17 @@ class ImportGood extends Component {
                 this.firstSaveProductSize(res.data.products.code, res.data.products.importPrice, products[i].product.id, idImport)
             })
         }
-
     }
     async firstSaveProductSize(idPro, importPrice, idProOnState, idImport) {
         var { products, productSizes } = this.props;
-       
         for (var j = 0; j < productSizes.length; j++) {
             if (productSizes[j].productSize.productId === idProOnState) {
                 const dataProductSize = { productCode:idPro , sizeCode:productSizes[j].productSize.sizeCode , productCount:productSizes[j].productSize.productCount};
-                this.saveProductSize(dataProductSize, importPrice, idImport, idPro, idProOnState, productSizes[j].productSize.productCount)
+                await this.saveProductSize(dataProductSize, importPrice, idImport, idPro, idProOnState, productSizes[j].productSize.productCount)
             }
         }
+        await window.location.reload("/")
+        
     }
     async saveProductSize(dataProductSize, importPrice, idImport, idPro, idProOnState, amount) {
         await ProductService.createProductSize({
@@ -451,6 +454,7 @@ class ImportGood extends Component {
         }).then(res => {
             this.firstSaveImportDetail(idImport, importPrice,idPro, res.data.productSize.code, idProOnState, amount)
         })
+        await console.log("hihihi")
     }
     async firstSaveImportDetail(idImport, importPrice,idPro, productSizeCode, idProOnState, amount) {
         var { productSizes } = this.props
@@ -468,9 +472,7 @@ class ImportGood extends Component {
             productCode: dataImportDetail.productCode,
             importPrice:dataImportDetail.importPrice,
             amount:dataImportDetail.amount,
-        }).then(
-            window.location.reload("/")
-        )
+        })
     }
     InputOnChangePublisherName = (event) => {
         const { name, value } = event.target;
@@ -894,24 +896,20 @@ class ImportGood extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-9">
-
                                         </div>
                                         <div className="col-3">
                                             <div className="containerBtn">
                                                 <Button variant="danger btnCancel">Hủy</Button>
                                                 <Button variant="primary btnSave" onClick={() => this.processImport()}>Lưu hóa đơn</Button>
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </CCardFooter>
                             </CCard>
                         </CCol>
                     </CRow>
                 </>
             </div>
-
         );
     }
     imageHandler = (event) => {
