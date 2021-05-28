@@ -107,53 +107,9 @@ class Home extends Component {
                 </div>
                 {/* <!-- slider Area End-->
                     <!-- Category Area Start--> */}
-                <section className="category-area section-padding30">
-                    <div className="container-fluid">
-                        {/* <!-- Section Tittle --> */}
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="section-tittle text-center mb-85">
-                                    <h2>Shop by Category</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xl-2">
-
-                            </div>
-                            <div className="col-xl-4 col-lg-6">
-                                <div className="single-category mb-30">
-                                    <div className="category-img text-center">
-                                        <img src={require('../../img/categori/cat2.jpg')} />
-                                        <div className="category-caption">
-                                            <span className="collection">Discount!</span>
-                                            <h2>Giày nữ</h2>
-                                            <span className="best"><Link to={`/productList/Nữ`}>New Collection</Link></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xl-4 col-lg-6">
-                                <div className="single-category mb-30">
-                                    <div className="category-img">
-                                        <img src={require('../../img/categori/cat3.jpg')} />
-                                        <div className="category-caption">
-                                            <h2>Giày nam</h2>
-                                            <span className="best"><Link to={`/productList/Nam`}>Best New Deals</Link></span>
-                                            <span className="collection">New Collection</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xl-2">
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
                 {/* <!-- Category Area End-->
                 <!-- Latest Products Start --> */}
-                <section className="latest-product-area">
+                <section className="latest-product-area mt-5">
                     <div className="container">
                         <div className="row product-btn d-flex justify-content-end align-items-end">
                             {/* <!-- Section Tittle --> */}
@@ -176,7 +132,7 @@ class Home extends Component {
                                                 border: "none",
                                                 borderBottom: "1px solid #000",
                                                 borderRadius: 0,
-                                                fontSize: "22px",
+                                                fontSize: "30px",
                                                 opacity: "1",
                                                 fontWeight:'bold'
                                             }}

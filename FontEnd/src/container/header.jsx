@@ -142,33 +142,7 @@ class Header extends Component {
                                                 <Link class="nav-link" to="/productlist">Tất cả sản phẩm<span class="sr-only">(current)</span></Link>
                                             </li>
                                             <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Nam<span class="sr-only">(current)</span></Link>
-                                            </li>
-                                            <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Nữ<span class="sr-only">(current)</span></Link>
-                                            </li>
-                                            <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Bé trai<span class="sr-only">(current)</span></Link>
-                                            </li>
-                                            <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Bé gái<span class="sr-only">(current)</span></Link>
-                                            </li>
-                                            <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Sale<span class="sr-only">(current)</span></Link>
-                                            </li>
-                                            <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Liên hệ<span class="sr-only">(current)</span></Link>
-                                            </li>
-                                            <div className="hrS"></div>
-                                            <li class="nav-item active">
-                                                <Link class="nav-link" to="/productlist">Giới thiệu<span class="sr-only">(current)</span></Link>
-                                            </li>
+                                            
                                         </ul>
                                         <div className="row">
                                             <div className="col-9">
@@ -191,44 +165,18 @@ class Header extends Component {
                                             </div>
                                         </div>
                                         <div className="col-xl-6 col-lg-8 col-md-8 col-sm-5">
-                                            <div className="main-menu f-right d-none d-lg-block">
+                                            <div className="main-menu f-left d-none d-lg-block">
                                                 <nav>
                                                     <ul id="navigation">
                                                         <li><Link to="/productList">TẤT CẢ SẢN PHẨM</Link></li>
-                                                        <li ><Link to="/productList">NAM</Link>
-                                                            {/* <ul className="submenu">
-                                                                <li><a href="product_list.html"> Product list</a></li>
-                                                                <li><a href="single-product.html"> Product Details</a></li>
-                                                            </ul> */}
-                                                        </li>
-                                                        <li><Link to="/productList">NỮ</Link>
-                                                            {/* <ul className="submenu">
-                                                                <li><a href="blog.html">Blog</a></li>
-                                                                <li><a href="single-blog.html">Blog Details</a></li>
-                                                            </ul> */}
-                                                        </li>
-                                                        <li><Link to="/productList">BÉ TRAI </Link>
-                                                            {/* <ul className="submenu">
-                                                                <li><a href="login.html">Login</a></li>
-                                                                <li><a href="cart.html">Card</a></li>
-                                                                <li><a href="elements.html">Element</a></li>
-                                                                <li><a href="about.html">About</a></li>
-                                                                <li><a href="confirmation.html">Confirmation</a></li>
-                                                                <li><a href="cart.html">Shopping Cart</a></li>
-                                                                <li><a href="checkout.html">Product Checkout</a></li>
-                                                            </ul> */}
-                                                        </li>
-                                                        <li><Link href="/productList">BÉ GÁI</Link></li>
-                                                        <li className="hot"><a href="/productList">SALE</a></li>
-                                                        <li><a href="/productList">LIÊN HỆ</a></li>
-                                                        <li><a href="/productList">GIỚI THIỆU</a></li>
+                                                        
 
                                                     </ul>
                                                 </nav>
                                             </div>
                                         </div>
                                         <div className="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
-                                            <ul className="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                            <ul className="header-right f-left d-none d-lg-block d-flex justify-content-between">
                                                 <li className="d-none d-xl-block searchRight">
                                                     <div className="form-box f-right" >
                                                         <input type="text" onChange={this.inputOnChange} name="Search" placeholder="Tìm kiếm.....aaa" />

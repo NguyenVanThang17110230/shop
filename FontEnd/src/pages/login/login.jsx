@@ -139,16 +139,9 @@ class Login extends Component {
                                                 <button type="submit" onClick={this.login} id="login" className="btn_3">
                                                     log in
                                                 </button>
-                                                <a class="lost_pass" href="#">forget password?</a>
+                                                
                                                 <br />
                                                 <br />
-                                                <div id="login" className="btn btnGoogle" onClick={()=>this.LoginGoogle()}>
-                                                    <i class="fab fa-google-plus fa-3x iconGoogle"><div className="textOnIconGoogle">Đăng nhập bằng Google</div></i>
-                                                </div>
-                                                <br />
-                                                <div id="login" className="btn btnFacebook" onClick={()=>this.LoginFacebook()}>
-                                                    <i class="fab fa-facebook fa-3x iconFacebook"><div className="textOnIconGoogle">Đăng nhập bằng Facebook</div></i>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

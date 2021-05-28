@@ -5,6 +5,9 @@
     width: 356px;
     height: auto;
 }
+.th-89{
+    font-family: "Playfair Display", serif;
+}
 .th-89:active,.th-89:active:focus,.th-89:target,.th-89:focus{
     border:none;
     box-shadow: none !important;
