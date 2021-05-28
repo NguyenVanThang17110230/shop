@@ -5,3 +5,13 @@
     width: 356px;
     height: auto;
 }
+.th-89:active,.th-89:active:focus,.th-89:target,.th-89:focus{
+    border:none;
+    box-shadow: none !important;
+}
+.th-89::after{
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}

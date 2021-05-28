@@ -468,7 +468,9 @@ class ImportGood extends Component {
             productCode: dataImportDetail.productCode,
             importPrice:dataImportDetail.importPrice,
             amount:dataImportDetail.amount,
-        })
+        }).then(
+            window.location.reload("/")
+        )
     }
     InputOnChangePublisherName = (event) => {
         const { name, value } = event.target;

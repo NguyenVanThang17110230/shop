@@ -14,6 +14,7 @@ class Home extends Component {
         stateGroup: [],
         stateProducts: [],
         stateBestSeller: '',
+        dataView: [],
     }
     componentDidMount() {
         window.scrollTo(0, 0)
@@ -46,7 +47,7 @@ class Home extends Component {
     async loadCategory() {
         await CategoryService.listCategory().then(res => {
             this.props.onLoadCategoriesFromApi(res.data.categories)
-            //this.setState({ stateCategory: res.data.categories })
+            this.setState({ stateCategory: res.data.categories })
         })
     }
     processPrice = (sellPrice, promotionPrice) => {
@@ -59,12 +60,22 @@ class Home extends Component {
         }
         return result;
     }
+    _setView = (code) =>{
+        const { stateProducts } = this.state
+        const data = stateProducts.filter(x => x.categoryCode === code)
+        if(data && data.length>0){
+            this.setState({
+                dataView:data
+            })
+        }
+    }
     render() {
         const formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
             minimumFractionDigits: 0
         })
+        console.log("state", this.state);
         return (
             <main>
                 <div className="slider-area ">
@@ -92,28 +103,6 @@ class Home extends Component {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="single-slider slider-height data-background">
-                            <div className="container">
-                                <div className="row d-flex align-items-center justify-content-between">
-                                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
-                                        <div className="hero__img" data-animation="bounceIn" data-delay=".4s">
-                                            <img src={require('../../img/hero/hero_man.png')} />
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-5 col-lg-5 col-md-5 col-sm-8">
-                                        <div className="hero__caption">
-                                            <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
-                                            <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br /> Collection</h1>
-                                            <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
-
-                                            <div className="hero__btn" data-animation="fadeInRight" data-delay="1s">
-                                                <Link href="industries.html" className="btn btn1 hero-btn">Shop Now</Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
                 {/* <!-- slider Area End-->
@@ -175,15 +164,43 @@ class Home extends Component {
                             </div>
                             <div className="col-xl-6 col-lg-7 col-md-7">
                                 <div className="properties__button f-right">
-                                    {/* <!--Nav Button  --> */}
-                                    <nav>
-                                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All</a>
-                                            <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">New</a>
-                                            <a className="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Featured</a>
-                                            <a className="nav-item nav-link" id="nav-last-tab" data-toggle="tab" href="#nav-last" role="tab" aria-controls="nav-contact" aria-selected="false">Offer</a>
+                                    <div class="btn-group">
+                                        <button type="button"
+                                            class="btn btn-danger dropdown-toggle th-89"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            style={{
+                                                background: "#fff",
+                                                color: "black",
+                                                border: "none",
+                                                borderBottom: "1px solid #000",
+                                                borderRadius: 0,
+                                                fontSize: "22px",
+                                                opacity: "1",
+                                                fontWeight:'bold'
+                                            }}
+                                        >
+                                            Thể loại
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            {this.state.stateCategory.map((data, index) => {
+                                                return (
+                                                    <button
+                                                        class="dropdown-item"
+                                                        type="button"
+                                                        key={index}
+                                                        onClick={()=>this._setView(data.code)}
+                                                    >
+                                                        {data.name}
+                                                    </button>
+                                                )
+                                            })}
+                                            {/* <button class="dropdown-item" type="button">Action</button>
+                                            <button class="dropdown-item" type="button">Another action</button>
+                                            <button class="dropdown-item" type="button">Something else here</button> */}
                                         </div>
-                                    </nav>
+                                    </div>
                                     {/* <!--End Nav Button  --> */}
                                 </div>
                             </div>
@@ -192,11 +209,11 @@ class Home extends Component {
                         <div className="tab-content" id="nav-tabContent">
                             {/* <!-- card one --> */}
                             <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                {this.props.products ?
+                                {this.state.dataView.length < 1 ?
                                     <div className="row">
                                         {this.state.stateProducts.map((product, idx) => {
                                             return (
-                                                <div className="col-xl-4 col-lg-4 col-md-6">
+                                                <div className="col-xl-4 col-lg-4 col-md-6" key={idx}>
                                                     <div className="single-product mb-60">
                                                         <div className="product-img">
                                                             <img src={`${product.image}`} />
@@ -205,13 +222,6 @@ class Home extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="product-caption">
-                                                            <div className="product-ratting">
-                                                                <i className="far fa-star"></i>
-                                                                <i className="far fa-star"></i>
-                                                                <i className="far fa-star"></i>
-                                                                <i className="far fa-star low-star"></i>
-                                                                <i className="far fa-star low-star"></i>
-                                                            </div>
                                                             <h4><Link to={`/${product.code}`}>{product.name}</Link></h4>
                                                             <div className="price">
                                                                 <ul>
@@ -227,29 +237,24 @@ class Home extends Component {
                                         })}
                                     </div> :
                                     <div className="row">
-                                        {this.props.products.products.map((product, idx) => {
+                                        {this.state.dataView.map((product, idx) => {
                                             return (
-                                                <div className="col-xl-4 col-lg-4 col-md-6">
+                                                <div className="col-xl-4 col-lg-4 col-md-6" key={idx}>
                                                     <div className="single-product mb-60">
                                                         <div className="product-img">
-                                                            <img src={`http://localhost:5000/${product.imagePath}`} />
+                                                            <img src={product.image} />
                                                             <div className="new-product">
                                                                 <span>New</span>
                                                             </div>
                                                         </div>
                                                         <div className="product-caption">
                                                             <div className="product-ratting">
-                                                                <i className="far fa-star"></i>
-                                                                <i className="far fa-star"></i>
-                                                                <i className="far fa-star"></i>
-                                                                <i className="far fa-star low-star"></i>
-                                                                <i className="far fa-star low-star"></i>
                                                             </div>
-                                                            <h4><Link to={`/${product.alias}`}>{product.name}</Link></h4>
+                                                            <h4><Link to={`/${product.code}`}>{product.name}</Link></h4>
                                                             <div className="price">
                                                                 <ul>
-                                                                    <li>{formatter.format(this.processPrice(product.sellPrice, product.promotion))}</li>
-                                                                    <li className="discount">{product.sellPrice}</li>
+                                                                    <li>{product.sellPrice} đ</li>
+                                                                    {/* <li className="discount">{product.sellPrice}</li> */}
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -262,462 +267,6 @@ class Home extends Component {
 
                                     </div>
                                 }
-                            </div>
-                            {/* <!-- Card two --> */}
-                            <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                <div className="row">
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product4.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product5.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product6.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product2.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product3.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product1.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- Card three --> */}
-                            <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                <div className="row">
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product2.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product3.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product1.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product4.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product5.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product5.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- card foure --> */}
-                            <div className="tab-pane fade" id="nav-last" role="tabpanel" aria-labelledby="nav-last-tab">
-                                <div className="row">
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product1.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product2.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product3.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product4.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product5.png')} />
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-md-6">
-                                        <div className="single-product mb-60">
-                                            <div className="product-img">
-                                                <img src={require('../../img/categori/product6.png')} />
-                                                <div className="new-product">
-                                                    <span>New</span>
-                                                </div>
-                                            </div>
-                                            <div className="product-caption">
-                                                <div className="product-ratting">
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                    <i className="far fa-star low-star"></i>
-                                                </div>
-                                                <h4><a href="#">Green Dress with details</a></h4>
-                                                <div className="price">
-                                                    <ul>
-                                                        <li>$40.00</li>
-                                                        <li className="discount">$60.00</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         {/* <!-- End Nav Card --> */}
