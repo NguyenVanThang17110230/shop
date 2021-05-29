@@ -60,14 +60,30 @@ class Home extends Component {
         }
         return result;
     }
-    _setView = (code) =>{
+    _setView = (code) => {
         const { stateProducts } = this.state
         const data = stateProducts.filter(x => x.categoryCode === code)
-        if(data && data.length>0){
+        if (data && data.length > 0) {
             this.setState({
-                dataView:data
+                dataView: data
             })
         }
+    }
+    searchOk = async data => {
+        if (data !== "") {
+            console.log("datapl", data);
+            await ProductService.serch({ name: data }).then((res) => {
+                if (res.status === 200)
+                    console.log("hihi", res.data.product)
+                this.setState({
+                    dataView: [res.data.product]
+                })
+            })
+        }
+        else{
+            this.setState({dataView:this.state.stateProducts})
+        }
+
     }
     render() {
         const formatter = new Intl.NumberFormat('vi-VN', {
@@ -78,7 +94,14 @@ class Home extends Component {
         console.log("state", this.state);
         return (
             <main>
+                <div className="form-box1 f-right" >
+                    <input type="text" onChange={(event) => this.searchOk(event.currentTarget.value)} className="th-99" name="Search" placeholder="Tìm kiếm.....aaa" />
+                    <div className="search-icon" onClick={() => this.search()}>
+                        <i className="fas fa-search special-tag"></i>
+                    </div>
+                </div>
                 <div className="slider-area ">
+
                     {/* <!-- Mobile Menu --> */}
                     <div className="slider-active">
                         <div className="single-slider slider-height data-background-home">
@@ -134,7 +157,7 @@ class Home extends Component {
                                                 borderRadius: 0,
                                                 fontSize: "30px",
                                                 opacity: "1",
-                                                fontWeight:'bold'
+                                                fontWeight: 'bold'
                                             }}
                                         >
                                             Thể loại
@@ -146,7 +169,7 @@ class Home extends Component {
                                                         class="dropdown-item"
                                                         type="button"
                                                         key={index}
-                                                        onClick={()=>this._setView(data.code)}
+                                                        onClick={() => this._setView(data.code)}
                                                     >
                                                         {data.name}
                                                     </button>

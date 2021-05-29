@@ -18,3 +18,26 @@
     border-bottom: 0;
     border-left: .3em solid transparent;
 }
+
+
+  .form-box1{
+      position: relative;
+      width: 300px !important;
+      transform: translate(-388px,-72px);
+  }
+  .th-99{
+    border: 1px solid #eeeeee;
+    border-radius: 30px;
+    padding: 10px 20px;
+    width: 100%;
+  }
+  .search-icon{
+    position: absolute;
+    top: 12px;
+    right: 17px;
+  }
+  .search-icon i{
+    color: #6c6a6a;
+    cursor: pointer;
+  }
+  

@@ -399,6 +399,7 @@ class ImportGood extends Component {
                 
             })
             this.deleteImportGoodFromLocalStorage()
+            
         } 
     }
     async deleteImportGoodFromLocalStorage() {
@@ -430,10 +431,12 @@ class ImportGood extends Component {
                 thumbnail:products[i].product.thumbnail,
                 importPrice:products[i].product.importPrice,
                 sellPrice:products[i].product.sellPrice,
-            }).then(res => {
-                this.firstSaveProductSize(res.data.products.code, res.data.products.importPrice, products[i].product.id, idImport)
+            }).then(async res => {
+               await this.firstSaveProductSize(res.data.products.code, res.data.products.importPrice, products[i].product.id, idImport)
             })
         }
+        await console.log("ahuhu")
+        await window.location.reload("/")
     }
     async firstSaveProductSize(idPro, importPrice, idProOnState, idImport) {
         var { products, productSizes } = this.props;
@@ -443,7 +446,8 @@ class ImportGood extends Component {
                 await this.saveProductSize(dataProductSize, importPrice, idImport, idPro, idProOnState, productSizes[j].productSize.productCount)
             }
         }
-        await window.location.reload("/")
+        await console.log("hihihi")
+        
         
     }
     async saveProductSize(dataProductSize, importPrice, idImport, idPro, idProOnState, amount) {
@@ -454,7 +458,7 @@ class ImportGood extends Component {
         }).then(res => {
             this.firstSaveImportDetail(idImport, importPrice,idPro, res.data.productSize.code, idProOnState, amount)
         })
-        await console.log("hihihi")
+        
     }
     async firstSaveImportDetail(idImport, importPrice,idPro, productSizeCode, idProOnState, amount) {
         var { productSizes } = this.props

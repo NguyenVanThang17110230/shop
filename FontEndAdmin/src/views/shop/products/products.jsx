@@ -534,7 +534,7 @@ class Products extends Component {
         })
       }
   delete =(type) => {
-      var result = window.confirm("Bạn chắc chắn muốn xóa loại thương hiệu này không?")
+      var result = window.confirm("Bạn chắc chắn muốn xóa loại sản phẩm này không?")
       if (result) {
         ProductService.deleteService(type)
           .then((res) => {
@@ -580,15 +580,21 @@ class Products extends Component {
         })
         this.setCloseModalEditBrand()
       }
-      delete = (type) => {
-        var result = window.confirm("Bạn chắc chắn muốn xóa loại nhóm này không?")
+      deleteSize = (type) => {
+        console.log("yt",type);
+        var result = window.confirm("Bạn chắc chắn muốn xóa loại size này không?")
         if(result){
-          CategoryService.deleteService(type)
+          ProductService.deletePrSizeService(type.code)
           .then((res)=>{
             console.log(res);
             if(res.status === 200){
               toast.success("Xóa thành công");
-                this.loadData();
+              ProductService.getProductSizeByProductCode(type.productCode).then(res => {
+                this.setState({ stateProductOnSizeModal: res.data.productSizes })
+              }, function (error) {
+                alert("Lỗi không lấy được sản phẩm")
+              })
+              this.loadData();
             }
             else
             {
@@ -874,7 +880,7 @@ class Products extends Component {
                             <td>
                               <i 
                               className="fas fa-trash-alt trashOnTableSize"
-                              onClick={()=>this.delete(ProductSizes.code)}
+                              onClick={()=>this.deleteSize(ProductSizes)}
                               >
                                 </i>
                               </td>

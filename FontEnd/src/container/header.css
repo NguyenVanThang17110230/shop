@@ -5,6 +5,11 @@
 .img {
   max-width: 100% !important;
 }
+.form-box {
+  width: 100% !important;
+  opacity: 0;
+  visibility: hidden;
+}
 .btnUser {
   width: 60px;
   height: 60px;
@@ -44,6 +49,8 @@
 @media only screen and (min-width: 1600px) {
   .form-box {
     width: 100% !important;
+    opacity: 0;
+    visibility: hidden;
   }
   .searchRight {
     margin-right: 70px;
@@ -161,7 +168,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     font-weight: 600;
     position: inherit;
-    margin-right: -90px;
+    margin-right: -80px;
   }
   .dropDownMargin {
     margin-top: 10px;

@@ -18,6 +18,7 @@ const updateProduct = (id , data) => Api.patch(`${Api.url.product}/${id}`, data)
 const getProductSizeByProductCode = productCode => Api.get(`${Api.url.product}/productSize/${productCode}`)
 const get = id => Api.get(`${Api.url.product}/productSize/size/${id}`)
 const deleteService = code => Api.delete(`${Api.url.product}/${code}`)
+const deletePrSizeService = code => Api.delete(`${Api.url.product}/productSize/${code}`)
 
 // const getProduct = () => Api.get(`${Api.url.product}/${id}`)
 export default{
@@ -31,5 +32,6 @@ export default{
     getProductSizeByProductCode:getProductSizeByProductCode,
     deleteService:deleteService,
     get:get,
-    listProductSize:listProductSize
+    listProductSize:listProductSize,
+    deletePrSizeService:deletePrSizeService
 };
