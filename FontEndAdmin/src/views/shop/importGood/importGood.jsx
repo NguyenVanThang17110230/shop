@@ -433,6 +433,14 @@ class ImportGood extends Component {
                 sellPrice:products[i].product.sellPrice,
             }).then(async res => {
                await this.firstSaveProductSize(res.data.products.code, res.data.products.importPrice, products[i].product.id, idImport)
+            }).catch(async err => {
+                console.log("err",err.response);
+                if(err.response.data.code===409){
+                    if(err.response.data.product){
+                        await this.firstSaveProductSize(err.response.data.product.code, err.response.data.product.importPrice, products[i].product.id, idImport)
+                    }
+                }
+                
             })
         }
         await console.log("ahuhu")

@@ -96,7 +96,7 @@ class Home extends Component {
             <main>
                 <div className="form-box1 f-right" >
                     <input type="text" onChange={(event) => this.searchOk(event.currentTarget.value)} className="th-99" name="Search" placeholder="Tìm kiếm.....aaa" />
-                    <div className="search-icon" onClick={() => this.search()}>
+                    <div className="search-icon">
                         <i className="fas fa-search special-tag"></i>
                     </div>
                 </div>
